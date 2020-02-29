@@ -8,8 +8,10 @@ import Foundation
 // MARK: - Tracks
 public struct Tracks: Codable {
     public let data: [TracksDatum]
+    public let total: Int
 
-    public init(data: [TracksDatum]) {
+    public init(data: [TracksDatum], total: Int) {
         self.data = data
+        self.total = total
     }
 }

@@ -12,15 +12,12 @@ import NetworkKit
 @testable import DeezerKit
 
 class DeezerKitTests: XCTestCase {
-    var service: DeezerService!
-    override func setUp() {
-        service = DeezerService(network: MockNetwork())
-    }
+    var network = MockNetwork()
     
     func testSearch() {
         let expectation = XCTestExpectation(description: "should get search response")
 
-        service.network
+        network
             .request(DeezerAPI.searchArtists(text: "eminem"))
             .responseDecoded(of: Search.self, errorType: DeezerAPIError.self) { response in
             
@@ -39,7 +36,7 @@ class DeezerKitTests: XCTestCase {
     func testGetArtistAlbums() {
         let expectation = XCTestExpectation(description: "should get albums response")
 
-        service.network
+        network
             .request(DeezerAPI.albumsForArtist(id: 1))
             .responseDecoded(of: ArtistAlbums.self, errorType: DeezerAPIError.self) { response in
             
@@ -58,7 +55,7 @@ class DeezerKitTests: XCTestCase {
     func testGetAlbum() {
         let expectation = XCTestExpectation(description: "should get album response")
 
-        service.network
+        network
             .request(DeezerAPI.album(id: 1))
             .responseDecoded(of: Album.self, errorType: DeezerAPIError.self) { response in
             
@@ -77,7 +74,7 @@ class DeezerKitTests: XCTestCase {
     func testGetAlbumTracks() {
         let expectation = XCTestExpectation(description: "should get album tracks response")
         
-        service.network
+        network
             .request(DeezerAPI.tracksForAlbum(id: 1))
             .responseDecoded(of: Tracks.self, errorType: DeezerAPIError.self) { response in
                 
@@ -96,7 +93,7 @@ class DeezerKitTests: XCTestCase {
     func testErrorResponse() {
         let expectation = XCTestExpectation(description: "should get search response")
 
-        service.network
+        network
             .request(DeezerAPI.searchArtists(text: "eminem"))
             .validate(with: FailValidator()) // force a failure so we get an DeezerAPIError
             .responseDecoded(of: Search.self, errorType: DeezerAPIError.self) { response in

@@ -9,7 +9,7 @@
 import Foundation
 import NetworkKit
 
-enum DeezerError: Error {
+public enum DeezerError: Error {
     case networkError(NetworkError)
     case apiError(DeezerAPIError)
 }

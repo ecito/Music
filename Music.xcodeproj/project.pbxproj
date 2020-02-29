@@ -10,6 +10,7 @@
 		657D370A240AD93600DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
 		657D370C240AE26A00DD21E5 /* DeezerValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */; };
 		657D370E240B0C7100DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
+		657D3710240B114600DD21E5 /* DeezerServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D370F240B114600DD21E5 /* DeezerServiceTests.swift */; };
 		65C04A76240931CA00971E09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C04A75240931CA00971E09 /* AppDelegate.swift */; };
 		65C04A7A240931CA00971E09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C04A79240931CA00971E09 /* ViewController.swift */; };
 		65C04A7F240931CC00971E09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65C04A7E240931CC00971E09 /* Assets.xcassets */; };
@@ -123,6 +124,7 @@
 /* Begin PBXFileReference section */
 		657D3709240AD93600DD21E5 /* DeezerValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerValidator.swift; sourceTree = "<group>"; };
 		657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerValidatorTests.swift; sourceTree = "<group>"; };
+		657D370F240B114600DD21E5 /* DeezerServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerServiceTests.swift; sourceTree = "<group>"; };
 		65C04A72240931CA00971E09 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C04A75240931CA00971E09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65C04A79240931CA00971E09 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				65C04AAB240931E400971E09 /* DeezerKitTests.swift */,
 				65C04AAD240931E400971E09 /* Info.plist */,
 				657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */,
+				657D370F240B114600DD21E5 /* DeezerServiceTests.swift */,
 			);
 			path = DeezerKitTests;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				65C04B72240ABF2A00971E09 /* ArtistElement.swift in Sources */,
 				65C04B5A240ABF2A00971E09 /* Genres.swift in Sources */,
 				65C04B80240AC64200971E09 /* DeezerService.swift in Sources */,
+				657D3710240B114600DD21E5 /* DeezerServiceTests.swift in Sources */,
 				65C04B74240ABF2A00971E09 /* Search.swift in Sources */,
 				65C04B62240ABF2A00971E09 /* ArtistAlbums.swift in Sources */,
 				65C04B56240ABF2A00971E09 /* AlbumClass.swift in Sources */,

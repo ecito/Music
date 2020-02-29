@@ -7,30 +7,9 @@
 //
 
 import Foundation
+import NetworkKit
 
 enum DeezerError: Error {
-    case quota
-    case itemsLimitExceeded
-    case permission
-    case tokenInvalid
-    case parameter
-    case parameterMissing
-    case queryInvalid
-    case serviceBusy
-    case dataNotFound
+    case networkError(NetworkError)
+    case apiError(DeezerAPIError)
 }
-
-/*
- https://developers.deezer.com/api/errors
- 
- QUOTA    Exception    4
- ITEMS_LIMIT_EXCEEDED    Exception    100
- PERMISSION    OAuthException    200
- TOKEN_INVALID    OAuthException    300
- PARAMETER    ParameterException    500
- PARAMETER_MISSING    MissingParameterException    501
- QUERY_INVALID    InvalidQueryException    600
- SERVICE_BUSY    Exception    700
- DATA_NOT_FOUND    DataException    800
-
- */

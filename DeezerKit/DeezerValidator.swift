@@ -6,12 +6,13 @@
 //  Copyright © 2020 DML. All rights reserved.
 //
 
+import Foundation
 import NetworkKit
 
 struct DeezerValidator: ResponseValidator {
     func validate(data: Data?, urlResponse: URLResponse?, error: Error?) -> Bool {
         if let data = data,
-            let _ = try? JSONDecoder().decode(ErrorModel.self, from: data) {
+            let _ = try? JSONDecoder().decode(DeezerAPIError.self, from: data) {
             return false
         }
         

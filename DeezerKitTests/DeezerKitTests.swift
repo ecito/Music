@@ -22,7 +22,7 @@ class DeezerKitTests: XCTestCase {
 
         service.network
             .request(DeezerAPI.searchArtists(text: "eminem"))
-            .responseDecoded(of: Search.self, errorType: ErrorModel.self) { response in
+            .responseDecoded(of: Search.self, errorType: DeezerAPIError.self) { response in
             
                 switch response.result {
                 case let .success(search):
@@ -41,7 +41,7 @@ class DeezerKitTests: XCTestCase {
 
         service.network
             .request(DeezerAPI.albumsForArtist(id: 1))
-            .responseDecoded(of: ArtistAlbums.self, errorType: ErrorModel.self) { response in
+            .responseDecoded(of: ArtistAlbums.self, errorType: DeezerAPIError.self) { response in
             
                 switch response.result {
                 case let .success(albums):
@@ -60,7 +60,7 @@ class DeezerKitTests: XCTestCase {
 
         service.network
             .request(DeezerAPI.album(id: 1))
-            .responseDecoded(of: Album.self, errorType: ErrorModel.self) { response in
+            .responseDecoded(of: Album.self, errorType: DeezerAPIError.self) { response in
             
                 switch response.result {
                 case let .success(album):
@@ -79,7 +79,7 @@ class DeezerKitTests: XCTestCase {
         
         service.network
             .request(DeezerAPI.tracksForAlbum(id: 1))
-            .responseDecoded(of: Tracks.self, errorType: ErrorModel.self) { response in
+            .responseDecoded(of: Tracks.self, errorType: DeezerAPIError.self) { response in
                 
                 switch response.result {
                 case let .success(tracks):
@@ -98,8 +98,8 @@ class DeezerKitTests: XCTestCase {
 
         service.network
             .request(DeezerAPI.searchArtists(text: "eminem"))
-            .validate(with: FailValidator()) // force a failure so we get an ErrorModel
-            .responseDecoded(of: Search.self, errorType: ErrorModel.self) { response in
+            .validate(with: FailValidator()) // force a failure so we get an DeezerAPIError
+            .responseDecoded(of: Search.self, errorType: DeezerAPIError.self) { response in
             print(response)
                 switch response.result {
                 case .success:
@@ -107,8 +107,8 @@ class DeezerKitTests: XCTestCase {
                 case let .failure(error):
                     print(error)
                     if case let .errorResponse(model) = error,
-                        let errorModel = model as? ErrorModel {
-                        XCTAssertEqual(errorModel.code, 800, "should have error code 2")
+                        let errorModel = model as? DeezerAPIError {
+                        XCTAssertEqual(errorModel.code, .dataNotFound, "should have error code 800")
                     }
                     else {
                         XCTFail("should have an error model")

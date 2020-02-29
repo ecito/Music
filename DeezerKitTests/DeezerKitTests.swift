@@ -12,7 +12,7 @@ import NetworkKit
 @testable import DeezerKit
 
 class DeezerKitTests: XCTestCase {
-    var network = Network()
+    var network = MockNetwork()
     
     func testSearch() {
         let expectation = XCTestExpectation(description: "should get search response")

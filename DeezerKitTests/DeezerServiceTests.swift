@@ -15,7 +15,7 @@ class DeezerServiceTests: XCTestCase {
 
    var service: DeezerService!
    override func setUp() {
-       service = DeezerService(network: Network())
+       service = DeezerService(network: MockNetwork())
    }
    
     func testSearch() {

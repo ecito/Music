@@ -12,7 +12,7 @@ import NetworkKit
 @testable import DeezerKit
 
 class DeezerKitTests: XCTestCase {
-    var network = MockNetwork()
+    var network = Network()
     
     func testSearch() {
         let expectation = XCTestExpectation(description: "should get search response")
@@ -20,7 +20,6 @@ class DeezerKitTests: XCTestCase {
         network
             .request(DeezerAPI.searchArtists(text: "eminem"))
             .responseDecoded(of: Search.self, errorType: DeezerAPIError.self) { response in
-            
                 switch response.result {
                 case let .success(search):
                     XCTAssertEqual(search.data.count, 25, "should have 25 search results")
@@ -30,7 +29,7 @@ class DeezerKitTests: XCTestCase {
                 }
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testGetArtistAlbums() {
@@ -49,16 +48,15 @@ class DeezerKitTests: XCTestCase {
                 }
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testGetAlbum() {
         let expectation = XCTestExpectation(description: "should get album response")
 
         network
-            .request(DeezerAPI.album(id: 1))
+            .request(DeezerAPI.album(id: 1109731))
             .responseDecoded(of: Album.self, errorType: DeezerAPIError.self) { response in
-            
                 switch response.result {
                 case let .success(album):
                     XCTAssertEqual(album.title, "Arabesuku", "should have title of Arabesuku")
@@ -68,14 +66,14 @@ class DeezerKitTests: XCTestCase {
                 }
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testGetAlbumTracks() {
         let expectation = XCTestExpectation(description: "should get album tracks response")
         
         network
-            .request(DeezerAPI.tracksForAlbum(id: 1))
+            .request(DeezerAPI.tracksForAlbum(id: 1109731))
             .responseDecoded(of: Tracks.self, errorType: DeezerAPIError.self) { response in
                 
                 switch response.result {
@@ -87,17 +85,16 @@ class DeezerKitTests: XCTestCase {
                 }
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testErrorResponse() {
         let expectation = XCTestExpectation(description: "should get search response")
 
         network
-            .request(DeezerAPI.searchArtists(text: "eminem"))
+            .request(DeezerAPI.album(id: -1))
             .validate(with: FailValidator()) // force a failure so we get an DeezerAPIError
             .responseDecoded(of: Search.self, errorType: DeezerAPIError.self) { response in
-            print(response)
                 switch response.result {
                 case .success:
                     XCTFail("should get an error")
@@ -114,6 +111,6 @@ class DeezerKitTests: XCTestCase {
                 }
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
 }

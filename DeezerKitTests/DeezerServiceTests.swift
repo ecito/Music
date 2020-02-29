@@ -15,7 +15,7 @@ class DeezerServiceTests: XCTestCase {
 
    var service: DeezerService!
    override func setUp() {
-       service = DeezerService(network: MockNetwork())
+       service = DeezerService(network: Network())
    }
    
     func testSearch() {
@@ -31,15 +31,15 @@ class DeezerServiceTests: XCTestCase {
             }
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testErrorResponse() {
         let expectation = XCTestExpectation(description: "should get search response")
 
-        service.performNetworkRequest(DeezerAPI.album(id: 1),
+        service.performNetworkRequest(DeezerAPI.album(id: -1),
                                       responseType: Album.self,
-                                      shouldFail: true) { result in 
+                                      shouldFail: true) { result in
             switch result {
             case .success:
                 XCTFail("should get an error")
@@ -54,6 +54,6 @@ class DeezerServiceTests: XCTestCase {
             }
         }
         
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 5)
     }
 }

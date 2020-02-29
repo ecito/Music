@@ -8,7 +8,7 @@ import Foundation
 // MARK: - Datum
 public struct TracksDatum: Codable {
     public let id: Int
-    public let readable: Bool
+    public let readable: Bool?
     public let title: String
     public let titleShort, titleVersion, isrc: String?
     public let link: String

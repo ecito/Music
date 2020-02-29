@@ -8,18 +8,18 @@ import Foundation
 // MARK: - SearchDatum
 public struct SearchDatum: Codable {
     public let id: Int
-    public let readable: Bool
-    public let title: String
+    public let readable: Bool?
+    public let title: String?
     public let titleShort: String?
     public let titleVersion: String?
     public let link: String
-    public let duration, rank: Int
+    public let duration, rank: Int?
     public let explicitLyrics: Bool?
     public let explicitContentLyrics: Int?
     public let explicitContentCover: Int?
-    public let preview: String
-    public let artist: Artist
-    public let album: AlbumClass
+    public let preview: String?
+    public let artist: Artist?
+    public let album: AlbumClass?
     public let type: String
 
     enum CodingKeys: String, CodingKey {

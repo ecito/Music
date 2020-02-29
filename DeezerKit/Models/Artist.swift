@@ -9,7 +9,7 @@ import Foundation
 public struct Artist: Codable {
     public let id: Int
     public let name: String
-    public let picture: String
+    public let picture: String?
     public let pictureSmall, pictureMedium, pictureBig, pictureXl: String?
     public let tracklist: String
     public let type: String

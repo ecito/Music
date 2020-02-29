@@ -10,7 +10,7 @@ public struct Contributor: Codable {
     public let id: Int
     public let name: String
     public let link, share, picture: String
-    public let pictureSmall, pictureMedium, pictureBig, pictureXl: String
+    public let pictureSmall, pictureMedium, pictureBig, pictureXl: String?
     public let radio: Bool
     public let tracklist: String
     public let type: String

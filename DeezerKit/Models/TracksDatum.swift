@@ -9,11 +9,13 @@ import Foundation
 public struct TracksDatum: Codable {
     public let id: Int
     public let readable: Bool
-    public let title, titleShort, titleVersion, isrc: String
+    public let title: String
+    public let titleShort, titleVersion, isrc: String?
     public let link: String
-    public let duration, trackPosition, diskNumber, rank: Int
-    public let explicitLyrics: Bool
-    public let explicitContentLyrics, explicitContentCover: Int
+    public let duration: Int
+    public let trackPosition, diskNumber, rank: Int?
+    public let explicitLyrics: Bool?
+    public let explicitContentLyrics, explicitContentCover: Int?
     public let preview: String
     public let artist: Artist
     public let type: String

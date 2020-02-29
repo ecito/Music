@@ -10,13 +10,14 @@ public struct ArtistAlbumsDatum: Codable {
     public let id: Int
     public let title: String
     public let link, cover: String
-    public let coverSmall, coverMedium, coverBig, coverXl: String
-    public let genreID, fans: Int
-    public let releaseDate: String
-    public let recordType: RecordTypeEnum
+    public let coverSmall, coverMedium, coverBig, coverXl: String?
+    public let genreID: Int?
+    public let fans: Int
+    public let releaseDate: String?
+    public let recordType: String?
     public let tracklist: String
-    public let explicitLyrics: Bool
-    public let type: RecordTypeEnum
+    public let explicitLyrics: Bool?
+    public let type: String
 
     enum CodingKeys: String, CodingKey {
         case id, title, link, cover
@@ -33,7 +34,7 @@ public struct ArtistAlbumsDatum: Codable {
         case type
     }
 
-    public init(id: Int, title: String, link: String, cover: String, coverSmall: String, coverMedium: String, coverBig: String, coverXl: String, genreID: Int, fans: Int, releaseDate: String, recordType: RecordTypeEnum, tracklist: String, explicitLyrics: Bool, type: RecordTypeEnum) {
+    public init(id: Int, title: String, link: String, cover: String, coverSmall: String, coverMedium: String, coverBig: String, coverXl: String, genreID: Int, fans: Int, releaseDate: String, recordType: String, tracklist: String, explicitLyrics: Bool, type: String) {
         self.id = id
         self.title = title
         self.link = link

@@ -35,4 +35,61 @@ class DeezerKitTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
     }
+    
+    func testGetArtistAlbums() {
+        let expectation = XCTestExpectation(description: "should get albums response")
+
+        service.network
+            .request(DeezerAPI.albumsForArtist(id: 1))
+            .responseDecoded(of: ArtistAlbums.self, errorType: ErrorModel.self) { response in
+            
+                switch response.result {
+                case let .success(albums):
+                    XCTAssertEqual(albums.data.count, 25, "should have 25 album results")
+                    expectation.fulfill()
+                case let .failure(error):
+                    XCTFail("got network error \(error)")
+                }
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetAlbum() {
+        let expectation = XCTestExpectation(description: "should get album response")
+
+        service.network
+            .request(DeezerAPI.album(id: 1))
+            .responseDecoded(of: Album.self, errorType: ErrorModel.self) { response in
+            
+                switch response.result {
+                case let .success(album):
+                    XCTAssertEqual(album.title, "Arabesuku", "should have title of Arabesuku")
+                    expectation.fulfill()
+                case let .failure(error):
+                    XCTFail("got network error \(error)")
+                }
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetAlbumTracks() {
+        let expectation = XCTestExpectation(description: "should get album tracks response")
+        
+        service.network
+            .request(DeezerAPI.tracksForAlbum(id: 1))
+            .responseDecoded(of: Tracks.self, errorType: ErrorModel.self) { response in
+                
+                switch response.result {
+                case let .success(tracks):
+                    XCTAssertEqual(tracks.data.count, 4, "should have 4 tracks")
+                    expectation.fulfill()
+                case let .failure(error):
+                    XCTFail("got network error \(error)")
+                }
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
 }

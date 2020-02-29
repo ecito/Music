@@ -11,9 +11,15 @@ public struct ErrorModel: Codable {
     public let message: String
     public let code: Int
 
-    public init(type: String, message: String, code: Int) {
-        self.type = type
-        self.message = message
-        self.code = code
+    enum LevelUpCodingKeys: String, CodingKey {
+        case error
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try! decoder.container(keyedBy: LevelUpCodingKeys.self)
+        let deezerNativeErrorContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .error)
+        type = try deezerNativeErrorContainer.decode(String.self, forKey: .type)
+        message = try deezerNativeErrorContainer.decode(String.self, forKey: .message)
+        code = try deezerNativeErrorContainer.decode(Int.self, forKey: .code)
     }
 }

@@ -92,4 +92,31 @@ class DeezerKitTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
     }
+    
+    func testErrorResponse() {
+        let expectation = XCTestExpectation(description: "should get search response")
+
+        service.network
+            .request(DeezerAPI.searchArtists(text: "eminem"))
+            .validate(with: FailValidator()) // force a failure so we get an ErrorModel
+            .responseDecoded(of: Search.self, errorType: ErrorModel.self) { response in
+            print(response)
+                switch response.result {
+                case .success:
+                    XCTFail("should get an error")
+                case let .failure(error):
+                    print(error)
+                    if case let .errorResponse(model) = error,
+                        let errorModel = model as? ErrorModel {
+                        XCTAssertEqual(errorModel.code, 800, "should have error code 2")
+                    }
+                    else {
+                        XCTFail("should have an error model")
+                    }
+                    expectation.fulfill()
+                }
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
 }

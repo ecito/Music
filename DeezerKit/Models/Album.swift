@@ -10,7 +10,7 @@ public struct Album: Codable {
     public let id: Int
     public let title, upc: String
     public let link, share, cover: String
-    public let coverSmall, coverMedium, coverBig, coverXl: String
+    public let coverSmall, coverMedium, coverBig, coverXl: String?
     public let genreID: Int
     public let genres: Genres
     public let label: String

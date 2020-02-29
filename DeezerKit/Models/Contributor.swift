@@ -13,7 +13,7 @@ public struct Contributor: Codable {
     public let pictureSmall, pictureMedium, pictureBig, pictureXl: String
     public let radio: Bool
     public let tracklist: String
-    public let type: ArtistType
+    public let type: String
     public let role: String
 
     enum CodingKeys: String, CodingKey {
@@ -25,7 +25,7 @@ public struct Contributor: Codable {
         case radio, tracklist, type, role
     }
 
-    public init(id: Int, name: String, link: String, share: String, picture: String, pictureSmall: String, pictureMedium: String, pictureBig: String, pictureXl: String, radio: Bool, tracklist: String, type: ArtistType, role: String) {
+    public init(id: Int, name: String, link: String, share: String, picture: String, pictureSmall: String, pictureMedium: String, pictureBig: String, pictureXl: String, radio: Bool, tracklist: String, type: String, role: String) {
         self.id = id
         self.name = name
         self.link = link

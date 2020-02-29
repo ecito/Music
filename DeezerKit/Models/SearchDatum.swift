@@ -9,12 +9,14 @@ import Foundation
 public struct SearchDatum: Codable {
     public let id: Int
     public let readable: Bool
-    public let title, titleShort: String
-    public let titleVersion: String
+    public let title: String
+    public let titleShort: String?
+    public let titleVersion: String?
     public let link: String
     public let duration, rank: Int
-    public let explicitLyrics: Bool
-    public let explicitContentLyrics, explicitContentCover: Int
+    public let explicitLyrics: Bool?
+    public let explicitContentLyrics: Int?
+    public let explicitContentCover: Int?
     public let preview: String
     public let artist: Artist
     public let album: AlbumClass

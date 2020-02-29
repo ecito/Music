@@ -7,28 +7,32 @@
 //
 
 import XCTest
+import NetworkKit
+
 @testable import DeezerKit
 
 class DeezerKitTests: XCTestCase {
-
+    var service: DeezerService!
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        service = DeezerService(network: MockNetwork())
     }
+    
+    func testSearch() {
+        let expectation = XCTestExpectation(description: "should get search response")
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        service.network
+            .request(DeezerAPI.searchArtists(text: "eminem"))
+            .responseDecoded(of: Search.self, errorType: ErrorModel.self) { response in
+            
+                switch response.result {
+                case let .success(search):
+                    XCTAssertEqual(search.data.count, 25, "should have 25 search results")
+                    expectation.fulfill()
+                case let .failure(error):
+                    XCTFail("got network error \(error)")
+                }
         }
+        
+        wait(for: [expectation], timeout: 1)
     }
-
 }

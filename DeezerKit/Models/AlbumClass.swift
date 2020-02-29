@@ -10,7 +10,7 @@ public struct AlbumClass: Codable {
     public let id: Int
     public let title: String
     public let cover: String
-    public let coverSmall, coverMedium, coverBig, coverXl: String
+    public let coverSmall, coverMedium, coverBig, coverXl: String?
     public let tracklist: String
     public let type: RecordTypeEnum
 

@@ -10,9 +10,9 @@ public struct Artist: Codable {
     public let id: Int
     public let name: String
     public let picture: String
-    public let pictureSmall, pictureMedium, pictureBig, pictureXl: String
+    public let pictureSmall, pictureMedium, pictureBig, pictureXl: String?
     public let tracklist: String
-    public let type: ArtistType
+    public let type: String
     public let link: String?
 
     enum CodingKeys: String, CodingKey {
@@ -24,7 +24,7 @@ public struct Artist: Codable {
         case tracklist, type, link
     }
 
-    public init(id: Int, name: String, picture: String, pictureSmall: String, pictureMedium: String, pictureBig: String, pictureXl: String, tracklist: String, type: ArtistType, link: String?) {
+    public init(id: Int, name: String, picture: String, pictureSmall: String, pictureMedium: String, pictureBig: String, pictureXl: String, tracklist: String, type: String, link: String?) {
         self.id = id
         self.name = name
         self.picture = picture

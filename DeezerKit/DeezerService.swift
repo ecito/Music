@@ -10,8 +10,9 @@ import Foundation
 import NetworkKit
 
 public class DeezerService {
-    public let network: NetworkType
-    init(network: NetworkType) {
+    let network: NetworkType
+    
+    public init(network: NetworkType) {
         self.network = network
     }
 

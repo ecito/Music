@@ -38,4 +38,16 @@ class DeezerValidatorTests: XCTestCase {
         
         XCTAssertFalse(result, "should NOT pass validation")
     }
+    
+    func testErrorStatusCodeWithCorrectData() {
+        let diskPath = DeezerAPI.album(id: 0).diskPath
+        let url = URL(fileURLWithPath: diskPath!)
+        let data = try! Data(contentsOf: url)
+
+        let response = HTTPURLResponse(url: URL(string: "http://api.deezer.com")!, statusCode: 500, httpVersion: nil, headerFields: nil)
+        let validator = DeezerValidator()
+        let result = validator.validate(data: data, urlResponse: response, error: nil)
+        
+        XCTAssertFalse(result, "should NOT pass validation")
+    }
 }

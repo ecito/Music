@@ -7,10 +7,13 @@
 //
 
 import XCTest
+import NetworkKit
+import DeezerKit
+
 @testable import Music
 
 class MusicTests: XCTestCase {
-    
+
     func test() {
         
     }

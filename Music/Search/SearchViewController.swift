@@ -9,23 +9,13 @@
 import UIKit
 import DeezerKit
 
-extension SearchDatum: Hashable {
-    public static func == (lhs: SearchDatum, rhs: SearchDatum) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
 enum SearchSection: CaseIterable {
     case results
 }
 
 class SearchViewController: UITableViewController {
-    var dependencies = Dependencies()
-    
+    lazy var dependencies = AppDependencies()
+
     lazy var searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
@@ -34,39 +24,25 @@ class SearchViewController: UITableViewController {
         return search
     }()
     
-    lazy var tableViewDataSource: UITableViewDiffableDataSource<SearchSection, SearchDatum> = {
-        return UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, searchItem in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "\(searchItem.id)"
-            return cell
-        }
+    lazy var searchDataSource: SearchDataSource = {
+        SearchDataSource(dependencies: dependencies, tableView: tableView)
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        tableView.dataSource = tableViewDataSource
+        tableView.dataSource = searchDataSource.tableViewDataSource
         navigationItem.searchController = searchController
     }
 }
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        
-        guard text.count > 1 else { return }
-                
-        dependencies.deezerService.searchArtistsWith(text: text) { result in
-            switch result {
-            case let .success(searchItems):
-                var snapshot = NSDiffableDataSourceSnapshot<SearchSection, SearchDatum>()
-                snapshot.appendSections(SearchSection.allCases)
-                snapshot.appendItems(searchItems.data)
-                self.tableViewDataSource.apply(snapshot, animatingDifferences: false)
-            case let .failure(error):
-                print(error)
-            }
+        guard let text = searchController.searchBar.text else {
+            return
         }
+        
+        searchDataSource.search(text)
     }
 }

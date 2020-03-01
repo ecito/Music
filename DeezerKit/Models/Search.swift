@@ -9,7 +9,7 @@ import Foundation
 public struct Search: Codable {
     public let data: [SearchDatum]
     public let total: Int
-    public let next: String
+    public let next: String?
 
     public init(data: [SearchDatum], total: Int, next: String) {
         self.data = data

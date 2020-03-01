@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6514A0B5240C495300D55E82 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0B4240C495300D55E82 /* Dependencies.swift */; };
 		6514A0B7240C4D2600D55E82 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0B6240C4D2600D55E82 /* SearchViewController.swift */; };
+		6514A0B9240C594700D55E82 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0B8240C594700D55E82 /* ModelTests.swift */; };
 		657D370A240AD93600DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
 		657D370C240AE26A00DD21E5 /* DeezerValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */; };
 		657D370E240B0C7100DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
@@ -125,6 +126,7 @@
 /* Begin PBXFileReference section */
 		6514A0B4240C495300D55E82 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		6514A0B6240C4D2600D55E82 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = Search/SearchViewController.swift; sourceTree = "<group>"; };
+		6514A0B8240C594700D55E82 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		657D3709240AD93600DD21E5 /* DeezerValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerValidator.swift; sourceTree = "<group>"; };
 		657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerValidatorTests.swift; sourceTree = "<group>"; };
 		657D370F240B114600DD21E5 /* DeezerServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerServiceTests.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				65C04AAD240931E400971E09 /* Info.plist */,
 				657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */,
 				657D370F240B114600DD21E5 /* DeezerServiceTests.swift */,
+				6514A0B8240C594700D55E82 /* ModelTests.swift */,
 			);
 			path = DeezerKitTests;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				65C04B80240AC64200971E09 /* DeezerService.swift in Sources */,
 				657D3710240B114600DD21E5 /* DeezerServiceTests.swift in Sources */,
 				65C04B74240ABF2A00971E09 /* Search.swift in Sources */,
+				6514A0B9240C594700D55E82 /* ModelTests.swift in Sources */,
 				65C04B62240ABF2A00971E09 /* ArtistAlbums.swift in Sources */,
 				65C04B56240ABF2A00971E09 /* AlbumClass.swift in Sources */,
 				65C04B54240ABF2A00971E09 /* Contributor.swift in Sources */,

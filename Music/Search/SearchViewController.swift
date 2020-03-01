@@ -63,7 +63,7 @@ extension SearchViewController: UISearchResultsUpdating {
                 var snapshot = NSDiffableDataSourceSnapshot<SearchSection, SearchDatum>()
                 snapshot.appendSections(SearchSection.allCases)
                 snapshot.appendItems(searchItems.data)
-                self.tableViewDataSource.apply(snapshot, animatingDifferences: true)
+                self.tableViewDataSource.apply(snapshot, animatingDifferences: false)
             case let .failure(error):
                 print(error)
             }

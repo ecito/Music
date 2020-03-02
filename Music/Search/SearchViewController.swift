@@ -9,13 +9,18 @@
 import UIKit
 import DeezerKit
 
-enum SearchSection: CaseIterable {
-    case results
-}
-
 class SearchViewController: UITableViewController {
-    lazy var dependencies = AppDependencies()
+    var dependencies: HasDeezerService
+    
+    init(dependencies: HasDeezerService) {
+        self.dependencies = dependencies
+        super.init(nibName: nil, bundle: nil)
+    }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     lazy var searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
@@ -24,16 +29,27 @@ class SearchViewController: UITableViewController {
         return search
     }()
     
-    lazy var searchDataSource: SearchDataSource = {
-        SearchDataSource(dependencies: dependencies, tableView: tableView)
-    }()
-    
+    lazy var searchDataSource = SearchDataSource(dependencies: dependencies,
+                                                 tableView: tableView,
+                                                 cellProvider: { tableView, indexPath, searchItem in
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchDataSource.cellIdentifier, for: indexPath)
+        cell.textLabel?.text = "\(searchItem.name)"
+        return cell
+    })
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: SearchDataSource.cellIdentifier)
         tableView.dataSource = searchDataSource.tableViewDataSource
         navigationItem.searchController = searchController
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let items = searchDataSource.searchItems
+        let searchItem = items[indexPath.row]
+        
+        // .. do something with item
     }
 }
 

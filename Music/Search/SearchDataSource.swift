@@ -9,37 +9,50 @@
 import UIKit
 import DeezerKit
 
-class SearchDataSource {
+enum SearchSection: CaseIterable {
+    case results
+}
+
+typealias SearchDiffableDataSource = UITableViewDiffableDataSource<SearchSection, SearchDatum>
+
+public class SearchDataSource {
     private var cancellableSearch: Cancellable?
     private var pendingRequestWorkItem: DispatchWorkItem?
     private var dependencies: HasDeezerService
     private var tableView: UITableView
+    private var cellProvider: SearchDiffableDataSource.CellProvider
+
+    public static var cellIdentifier = "Cell"
     
     public var debounceMilliseconds: Int = 500
     
-    public init(dependencies: HasDeezerService, tableView: UITableView) {
-        self.dependencies = dependencies
-        self.tableView = tableView
+    public var searchItems = [SearchDatum]() {
+        didSet {
+            var snapshot = NSDiffableDataSourceSnapshot<SearchSection, SearchDatum>()
+            snapshot.appendSections(SearchSection.allCases)
+            snapshot.appendItems(searchItems)
+            tableViewDataSource.apply(snapshot, animatingDifferences: false)
+        }
     }
     
-    lazy var tableViewDataSource: UITableViewDiffableDataSource<SearchSection, SearchDatum> = {
-        return UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, searchItem in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "\(searchItem.name)"
-            return cell
-        }
+    init(dependencies: HasDeezerService,
+                tableView: UITableView,
+                cellProvider: @escaping SearchDiffableDataSource.CellProvider) {
+        self.dependencies = dependencies
+        self.tableView = tableView
+        self.cellProvider = cellProvider
+    }
+    
+    lazy var tableViewDataSource: SearchDiffableDataSource = {
+        return UITableViewDiffableDataSource(tableView: tableView, cellProvider: cellProvider)
     }()
     
-    private func showEmptyTable() {
-        tableViewDataSource.apply(NSDiffableDataSourceSnapshot<SearchSection, SearchDatum>(),
-                                       animatingDifferences: false)
+    public func clear() {
+        searchItems = [SearchDatum]()
     }
     
     private func showSearchItems(_ items: [SearchDatum]) {
-        var snapshot = NSDiffableDataSourceSnapshot<SearchSection, SearchDatum>()
-        snapshot.appendSections(SearchSection.allCases)
-        snapshot.appendItems(items)
-        tableViewDataSource.apply(snapshot, animatingDifferences: false)
+        searchItems = items
     }
     
     public func cancelSearch() {
@@ -51,7 +64,7 @@ class SearchDataSource {
         cancelSearch()
         
         guard text.count > 1 else {
-            showEmptyTable()
+            clear()
             return
         }
 
@@ -62,7 +75,7 @@ class SearchDataSource {
             
             self.cancellableSearch = self.dependencies.deezerService.searchArtistsWith(text: text) { result in
                 self.cancellableSearch = nil
-                                
+
                 switch result {
                 case let .success(search):
                     self.showSearchItems(search.data)

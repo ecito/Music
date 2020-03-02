@@ -25,7 +25,7 @@ class SearchDataSourceTests: XCTestCase {
         super.setUp()
 
         tableView = UITableView(frame: .zero, style: .plain)
-        searchDataSource = SearchDataSource(dependencies: TestDependencies(), tableView: tableView)
+        searchDataSource = SearchDataSource(dependencies: TestDependencies(), tableView: tableView, cellProvider: { _, _, _ in return UITableViewCell() })
     }
     
     func testSearchPopulatesDataSource() {

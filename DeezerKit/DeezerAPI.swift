@@ -10,17 +10,17 @@ import Foundation
 import NetworkKit
 
 enum DeezerAPI {
-    case searchArtists(text: String)
-    case albumsForArtist(id: Int)
+    case searchArtists(text: String, index: Int?, limit: Int?)
+    case albumsForArtist(id: Int, index: Int?, limit: Int?)
     case album(id: Int)
-    case tracksForAlbum(id: Int)
+    case tracksForAlbum(id: Int, index: Int?, limit: Int?)
 }
 
 extension DeezerAPI: TargetType {
     var baseURL: URL {
         URL(string: "https://api.deezer.com/")!
     }
-        
+
     var method: HTTPMethod {
         .get
     }
@@ -29,19 +29,30 @@ extension DeezerAPI: TargetType {
         switch self {
         case .searchArtists:
             return "search/artist"
-        case .albumsForArtist(let id):
+        case let .albumsForArtist(id, _, _):
             return "artist/\(id)/albums"
         case .album(let id):
             return "album/\(id)"
-        case .tracksForAlbum(let id):
+        case let .tracksForAlbum(id, _, _):
             return "album/\(id)/tracks"
         }
     }
     
     var queryParameters: QueryParameters? {
         switch self {
-        case .searchArtists(let text):
-            return QueryParameters(["q": text])
+        case let .searchArtists(text, index, limit):
+            return .deezerQueryParameters(["q": text],
+                                          index: index,
+                                          limit: limit)
+        case let .albumsForArtist(_, index, limit):
+            return .deezerQueryParameters(nil,
+                                          index: index,
+                                          limit: limit)
+
+        case let .tracksForAlbum(_, index, limit):
+            return .deezerQueryParameters(nil,
+                                          index: index,
+                                          limit: limit)
         default:
             return nil
         }
@@ -51,9 +62,14 @@ extension DeezerAPI: TargetType {
         var filename = ""
 
         switch self {
-            
-        case .searchArtists:
-            filename = "search"
+        case let .searchArtists(_, index, limit):
+            if let index = index,
+                let limit = limit {
+                filename = "search-index\(index)-limit\(limit)"
+            }
+            else {
+                filename = "search"
+            }
         case .albumsForArtist:
             filename = "artist-albums"
         case .album:
@@ -67,5 +83,24 @@ extension DeezerAPI: TargetType {
     
     var diskPathErrorModel: String? {
         return Bundle.main.path(forResource: "error", ofType: "json")
+    }
+}
+
+extension QueryParameters {
+    static func deezerQueryParameters(_ additionalParamenters: [String: Any]?, index: Int?, limit: Int?) -> QueryParameters? {
+        var parameters: [String: Any] = additionalParamenters ?? [String: Any]()
+        
+        if let index = index {
+            parameters["index"] = index
+        }
+        if let limit = limit {
+            parameters["limit"] = limit
+        }
+        
+        guard !parameters.isEmpty else {
+            return nil
+        }
+        
+        return QueryParameters(parameters)
     }
 }

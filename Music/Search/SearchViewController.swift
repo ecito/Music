@@ -11,7 +11,7 @@ import DeezerKit
 
 class SearchViewController: UITableViewController {
     var dependencies: HasDeezerService
-    
+        
     init(dependencies: HasDeezerService) {
         self.dependencies = dependencies
         super.init(nibName: nil, bundle: nil)
@@ -31,12 +31,16 @@ class SearchViewController: UITableViewController {
     
     lazy var searchDataSource = SearchDataSource(dependencies: dependencies,
                                                  tableView: tableView,
-                                                 cellProvider: { tableView, indexPath, searchItem in
+                                                 cellProvider: cellProvider)
+        
+    lazy var didSelectItem: (SearchDatum, IndexPath) -> () = { _, _ in }
+    
+    lazy var cellProvider: SearchDiffableDataSource.CellProvider = { tableView, indexPath, searchItem in
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchDataSource.cellIdentifier, for: indexPath)
         cell.textLabel?.text = "\(searchItem.name)"
         return cell
-    })
-        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,8 +52,11 @@ class SearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let items = searchDataSource.searchItems
         let searchItem = items[indexPath.row]
-        
-        // .. do something with item
+        didSelectItem(searchItem, indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        searchDataSource.loadMoreIfNeeded(with: indexPath)
     }
 }
 

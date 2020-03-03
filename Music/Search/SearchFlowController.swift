@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import DeezerKit
 
 class SearchFlowController: UIViewController {
     private lazy var dependencies = AppDependencies()
 
     private lazy var searchViewController: SearchViewController = {
         let search = SearchViewController(dependencies: dependencies)
+        search.didSelectItem = { [weak self] item, indexPath in
+            self?.showAlbumsForArtist(item.id)
+        }
+        
         return search
     }()
 
@@ -27,14 +32,29 @@ class SearchFlowController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
-    func showArtist(_ id: Int) {
+    func showAlbumsForArtist(_ id: Int) {
+        let stateViewController = StateViewController()
         
+        ownedNavigationController.pushViewController(stateViewController, animated: true)
+        
+        // show loading indicator
+        dependencies.deezerService.getAlbumsForArtist(id) { result in
+            switch result {
+            case let .success(albums):
+                let albumsViewController = AlbumsViewController()
+                stateViewController.state = .content(controller: albumsViewController)
+            case let .failure(error):
+                stateViewController.state = .error(message: "error: \(error)")
+                break
+            }
+        }
     }
+    
     
     func showAlbum(_ id: Int) {
         
     }
 }
+

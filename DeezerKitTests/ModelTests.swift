@@ -17,7 +17,7 @@ class ModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "should get search response")
         
         network
-            .request(DeezerAPI.searchArtists(text: "eminem"))
+            .request(DeezerAPI.searchArtists(text: "eminem", index: nil, limit: nil))
             .responseDecoded(of: Search.self, errorType: DeezerAPIError.self) { response in
                 print(response.debugDescription)
                 switch response.result {

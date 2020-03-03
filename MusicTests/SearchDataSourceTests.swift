@@ -87,4 +87,42 @@ class SearchDataSourceTests: XCTestCase {
 
         wait(for: [expectation, expectation2], timeout: 2)
     }
+    
+    func testSearchPaging() {
+        let expectation = XCTestExpectation(description: "should get search response")
+
+        XCTAssertEqual(searchDataSource.tableViewDataSource.snapshot().numberOfItems, 0, "should have no items")
+        searchDataSource.searchLimit = 2
+        searchDataSource.search("asdf", index: 0) { result in
+            XCTAssertNotNil(try? result.get())
+            
+            let snapshot = self.searchDataSource.tableViewDataSource.snapshot()
+            XCTAssertEqual(snapshot.numberOfItems, 2, "should have 2 rows for the tableView")
+            
+            self.searchDataSource.search("asdf", index: 2) { result in
+                XCTAssertNotNil(try? result.get())
+                
+                let snapshot = self.searchDataSource.tableViewDataSource.snapshot()
+                XCTAssertEqual(snapshot.numberOfItems, 4, "should have 4 rows for the tableView")
+
+                self.searchDataSource.search("asdf", index: 4) { result in
+                    XCTAssertNotNil(try? result.get())
+                    
+                    let snapshot = self.searchDataSource.tableViewDataSource.snapshot()
+                    XCTAssertEqual(snapshot.numberOfItems, 6, "should have 6 rows for the tableView")
+
+                    self.searchDataSource.search("asdf", index: 6) { result in
+                        XCTAssertNil(try? result.get())
+                        
+                        let snapshot = self.searchDataSource.tableViewDataSource.snapshot()
+                        XCTAssertEqual(snapshot.numberOfItems, 6, "should have 6 rows for the tableView")
+
+                        expectation.fulfill()
+                    }
+                }
+            }
+        }
+        
+        wait(for: [expectation], timeout: 5)
+    }
 }

@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - SearchDatum
-public struct SearchDatum: Codable {
+public struct SearchDatum: Codable, Hashable {
     public let id: Int
     public let name: String
     public let link, picture: String
@@ -41,5 +41,13 @@ public struct SearchDatum: Codable {
         self.radio = radio
         self.tracklist = tracklist
         self.type = type
+    }
+    
+    public static func == (lhs: SearchDatum, rhs: SearchDatum) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

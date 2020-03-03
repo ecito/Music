@@ -12,7 +12,7 @@ import NetworkKit
 
 @testable import Music
 
-class TestDependencies: Music.HasDeezerService {
+class TestDependencies: HasDeezerService {
     var deezerService = DeezerService(network: MockNetwork())
 }
 

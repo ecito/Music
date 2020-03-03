@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "NetworkKit",
+        "repositoryURL": "git@github.com:shortcut/NetworkKit.git",
+        "state": {
+          "branch": null,
+          "revision": "7a6e18aa09a065e8fe9e8529b6d913764968d297",
+          "version": "0.1.6"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

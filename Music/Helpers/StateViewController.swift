@@ -33,9 +33,9 @@ public final class StateViewController: UIViewController {
 
     private func viewController(for state: State) -> UIViewController {
         switch state {
-        case .loading(let message):
+        case .loading(let _):
             return LoadingViewController()
-        case .empty(let message), .error(let message):
+        case .empty(let _), .error(let _):
             return LoadingViewController()
         case .content(let controller):
             return controller

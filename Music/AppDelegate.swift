@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        window?.rootViewController = SearchFlowController()
+        let dependencies = AppDependencies()
+        window?.rootViewController = dependencies.makeSearchFlowController()
         window?.makeKeyAndVisible()
         
         return true

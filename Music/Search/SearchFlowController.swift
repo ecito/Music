@@ -10,7 +10,7 @@ import UIKit
 import DeezerKit
 
 class SearchFlowController: UIViewController {
-    private lazy var dependencies = AppDependencies()
+    private var dependencies: HasDeezerService & ViewControllerFactory
 
     private lazy var searchViewController: SearchViewController = {
         let search = SearchViewController(dependencies: dependencies)
@@ -25,6 +25,15 @@ class SearchFlowController: UIViewController {
         return UINavigationController(rootViewController: searchViewController)
     }()
 
+    init(dependencies: HasDeezerService & ViewControllerFactory) {
+        self.dependencies = dependencies
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         view = UIView()
         install(ownedNavigationController)
@@ -35,26 +44,14 @@ class SearchFlowController: UIViewController {
     }
     
     func showAlbumsForArtist(_ id: Int) {
-        let stateViewController = StateViewController()
-        
-        ownedNavigationController.pushViewController(stateViewController, animated: true)
-        
-        // show loading indicator
-        dependencies.deezerService.getAlbumsForArtist(id) { result in
-            switch result {
-            case let .success(albums):
-                let albumsViewController = AlbumsViewController()
-                stateViewController.state = .content(controller: albumsViewController)
-            case let .failure(error):
-                stateViewController.state = .error(message: "error: \(error)")
-                break
-            }
-        }
+        let viewController = dependencies.makeAlbumsForArtistViewController(id)
+        ownedNavigationController.pushViewController(viewController, animated: true)
     }
     
     
     func showAlbum(_ id: Int) {
-        
+        let viewController = dependencies.makeAlbumViewController(id)
+        ownedNavigationController.pushViewController(viewController, animated: true)
     }
 }
 

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -40,6 +40,7 @@
 		6514A0E5240E4CFB00D55E82 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 65C04B82240AC68900971E09 /* error.json */; };
 		6514A0E7240E598F00D55E82 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0E6240E598F00D55E82 /* Factory.swift */; };
 		6514A0E9240E5C7E00D55E82 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0E6240E598F00D55E82 /* Factory.swift */; };
+		6514A0F0240E65BE00D55E82 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6514A0EF240E65BE00D55E82 /* NetworkKit */; };
 		657D370A240AD93600DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
 		657D370C240AE26A00DD21E5 /* DeezerValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */; };
 		657D370E240B0C7100DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
@@ -224,6 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6514A0F0240E65BE00D55E82 /* NetworkKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +472,7 @@
 			);
 			name = DeezerKit;
 			packageProductDependencies = (
+				6514A0EF240E65BE00D55E82 /* NetworkKit */,
 			);
 			productName = DeezerKit;
 			productReference = 65C04A9C240931E400971E09 /* DeezerKit.framework */;
@@ -531,6 +534,7 @@
 			);
 			mainGroup = 65C04A69240931CA00971E09;
 			packageReferences = (
+				6514A0EE240E65BD00D55E82 /* XCRemoteSwiftPackageReference "NetworkKit" */,
 			);
 			productRefGroup = 65C04A73240931CA00971E09 /* Products */;
 			projectDirPath = "";
@@ -1078,6 +1082,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6514A0EE240E65BD00D55E82 /* XCRemoteSwiftPackageReference "NetworkKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:shortcut/NetworkKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6514A0EF240E65BE00D55E82 /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6514A0EE240E65BD00D55E82 /* XCRemoteSwiftPackageReference "NetworkKit" */;
+			productName = NetworkKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 65C04A6A240931CA00971E09 /* Project object */;
 }

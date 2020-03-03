@@ -15,5 +15,7 @@ class LoadingViewController: UIViewController {
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
+        
+        view.backgroundColor = .red
     }
 }

@@ -12,7 +12,8 @@ import DeezerKit
 class AlbumsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
+        title = "Albums"
     }
     
     func show(_ albums: ArtistAlbumsViewModel) {

@@ -22,11 +22,12 @@ extension AppDependencies: ViewControllerFactory {
     
     func makeAlbumsForArtistViewController(_ id: Int) -> StateViewController {
         let stateViewController = StateViewController()
-                
+
         self.deezerService.getAlbumsForArtist(id) { result in
             switch result {
             case let .success(albums):
                 let albumsViewController = AlbumsViewController()
+                albumsViewController.show(ArtistAlbumsViewModel(title: "Test", albums: [AlbumViewModel]()))
                 stateViewController.state = .content(controller: albumsViewController)
             case let .failure(error):
                 stateViewController.state = .error(message: "error: \(error)")

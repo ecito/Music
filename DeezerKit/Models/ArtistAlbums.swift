@@ -9,7 +9,7 @@ import Foundation
 public struct ArtistAlbums: Codable {
     public let data: [ArtistAlbumsDatum]
     public let total: Int
-    public let next: String
+    public let next: String?
 
     public init(data: [ArtistAlbumsDatum], total: Int, next: String) {
         self.data = data

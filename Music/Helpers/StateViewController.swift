@@ -8,22 +8,7 @@
 
 import UIKit
 
-enum LoadingState<PreValue, Value, Error> {
-    case initial(preValue: PreValue)
-    case loading
-    case reloading
-    case loaded(value: Value)
-    case failed(error: Error)
-}
-
-protocol HasLoadingState {
-    associatedtype PreLoadingValue
-    associatedtype LoadingValue
-    associatedtype LoadingError
-    
-    func setLoadingState(_ state: LoadingState<PreLoadingValue, LoadingValue, LoadingError>)
-}
-
+// do we really need this? not really hmmmm 
 public final class StateViewController: UIViewController, HasLoadingState {
     typealias PreLoadingValue = String
     typealias LoadingValue = UIViewController

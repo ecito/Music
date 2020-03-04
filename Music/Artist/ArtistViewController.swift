@@ -12,7 +12,7 @@ import DeezerKit
 class ArtistViewController: UIViewController, HasLoadingState {
     typealias PreLoadingValue = SearchDatum
     typealias LoadingValue = ArtistAlbumsViewModel
-    typealias LoadingError = DeezerError
+    typealias LoadingError = ApplicationError
     
     lazy var albumsTableViewController = AlbumsTableViewController()
     lazy var stretchyViewController = StretchyHeaderScrollViewController(albumsTableViewController)
@@ -28,7 +28,7 @@ class ArtistViewController: UIViewController, HasLoadingState {
         install(stretchyViewController)
     }
     
-    func setLoadingState(_ state: LoadingState<SearchDatum, ArtistAlbumsViewModel, DeezerError>) {
+    func setLoadingState(_ state: LoadingState<SearchDatum, ArtistAlbumsViewModel, ApplicationError>) {
         switch state {
         case let .initial(artist):
             stretchyViewController.titleLabel.text = artist.name

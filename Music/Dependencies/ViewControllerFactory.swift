@@ -12,7 +12,7 @@ import DeezerKit
 protocol ViewControllerFactory {
     func makeSearchFlowController() -> SearchFlowController
     func makeAlbumsForArtistViewController(_ artist: SearchDatum) -> ArtistViewController
-    func makeAlbumViewController(_ id: Int) -> AlbumViewController
+    func makeAlbumViewController(_ album: AlbumViewModel) -> AlbumViewController
 }
 
 extension AppDependencies: ViewControllerFactory {
@@ -31,14 +31,28 @@ extension AppDependencies: ViewControllerFactory {
                 let viewModel = self.albumsViewModelFor(artist, artistAlbums: albums)
                 artistViewController.setLoadingState(.loaded(value: viewModel))
             case let .failure(error):
-                artistViewController.setLoadingState(.failed(error: error))
+                artistViewController.setLoadingState(.failed(error: .deezerError(error)))
             }
         }
 
         return artistViewController
     }
     
-    func makeAlbumViewController(_ id: Int) -> AlbumViewController {
-        return AlbumViewController()
+    func makeAlbumViewController(_ album: AlbumViewModel) -> AlbumViewController {
+        let albumViewController = AlbumViewController()
+        
+        albumViewController.setLoadingState(.initial(preValue: album))
+        
+        self.deezerService.getTracksForAlbum(album.id) { result in
+            switch result {
+            case let .success(tracks):
+                let viewModel = self.albumTracksViewModelFor(album, tracks: tracks)
+                albumViewController.setLoadingState(.loaded(value: viewModel))
+            case let .failure(error):
+                albumViewController.setLoadingState(.failed(error: .deezerError(error)))
+            }
+        }
+        
+        return albumViewController
     }
 }

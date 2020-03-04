@@ -21,10 +21,10 @@ public struct ArtistAlbumsDatum: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id, title, link, cover
-        case coverSmall
-        case coverMedium
-        case coverBig
-        case coverXl
+        case coverSmall = "cover_small"
+        case coverMedium = "cover_medium"
+        case coverBig = "cover_big"
+        case coverXl = "cover_xl"
         case genreID
         case fans
         case releaseDate

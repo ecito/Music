@@ -8,7 +8,36 @@
 
 import UIKit
 
-class AlbumViewController: UIViewController {
+class AlbumViewController: UIViewController, HasLoadingState {
+    typealias PreLoadingValue = AlbumViewModel
+    typealias LoadingValue = AlbumTracksViewModel
+    typealias LoadingError = ApplicationError
+    
+    lazy var tracksTableViewController = TracksTableViewController()
+    lazy var stretchyViewController = StretchyHeaderScrollViewController(tracksTableViewController)
+        
+    override func loadView() {
+        view = UIView()
+        install(stretchyViewController)
+    }
+    
+    func setLoadingState(_ state: LoadingState<AlbumViewModel, AlbumTracksViewModel, ApplicationError>) {
+        switch state {
+        case let .initial(album):
+            stretchyViewController.titleLabel.text = album.title
+            stretchyViewController.headerImageView.loadImage(from: album.imageURL)
+        case .loading:
+            // show a spinner? for example
+            break
+        case .reloading:
+            break
+        case let .loaded(tracks):
+            tracksTableViewController.show(tracks.tracks)
+        case .failed(let error):
+            print(error)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .darkGray

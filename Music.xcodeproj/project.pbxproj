@@ -17,7 +17,7 @@
 		6514A0C2240C701600D55E82 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0B4240C495300D55E82 /* Dependencies.swift */; };
 		6514A0C4240CF50100D55E82 /* SearchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0C3240CF50100D55E82 /* SearchFlowController.swift */; };
 		6514A0C7240CFCD700D55E82 /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0C6240CFCD700D55E82 /* UIViewController+Child.swift */; };
-		6514A0CA240D036500D55E82 /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0C9240D036500D55E82 /* AlbumsViewController.swift */; };
+		6514A0CA240D036500D55E82 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0C9240D036500D55E82 /* ArtistViewController.swift */; };
 		6514A0CD240D286D00D55E82 /* StateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0CC240D286D00D55E82 /* StateViewController.swift */; };
 		6514A0CF240D29EC00D55E82 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0CE240D29EC00D55E82 /* LoadingViewController.swift */; };
 		6514A0D1240D410700D55E82 /* ArtistAlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0D0240D410700D55E82 /* ArtistAlbumsViewModel.swift */; };
@@ -38,16 +38,20 @@
 		6514A0E3240E4CFB00D55E82 /* search.json in Resources */ = {isa = PBXBuildFile; fileRef = 65C04ABF240ABAA800971E09 /* search.json */; };
 		6514A0E4240E4CFB00D55E82 /* album-tracks.json in Resources */ = {isa = PBXBuildFile; fileRef = 65C04B81240AC68900971E09 /* album-tracks.json */; };
 		6514A0E5240E4CFB00D55E82 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 65C04B82240AC68900971E09 /* error.json */; };
-		6514A0E7240E598F00D55E82 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0E6240E598F00D55E82 /* Factory.swift */; };
-		6514A0E9240E5C7E00D55E82 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0E6240E598F00D55E82 /* Factory.swift */; };
+		6514A0E7240E598F00D55E82 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0E6240E598F00D55E82 /* ViewControllerFactory.swift */; };
+		6514A0E9240E5C7E00D55E82 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0E6240E598F00D55E82 /* ViewControllerFactory.swift */; };
 		6514A0F0240E65BE00D55E82 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6514A0EF240E65BE00D55E82 /* NetworkKit */; };
 		6514A0F2240E74A200D55E82 /* SearchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0C3240CF50100D55E82 /* SearchFlowController.swift */; };
 		6514A0F3240E74B000D55E82 /* StateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0CC240D286D00D55E82 /* StateViewController.swift */; };
-		6514A0F4240E74BF00D55E82 /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0C9240D036500D55E82 /* AlbumsViewController.swift */; };
+		6514A0F4240E74BF00D55E82 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0C9240D036500D55E82 /* ArtistViewController.swift */; };
 		6514A0F5240E74C300D55E82 /* ArtistAlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0D0240D410700D55E82 /* ArtistAlbumsViewModel.swift */; };
 		6514A0F6240E74D300D55E82 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0CE240D29EC00D55E82 /* LoadingViewController.swift */; };
 		6514A0F7240E74DD00D55E82 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0B6240C4D2600D55E82 /* SearchViewController.swift */; };
 		6514A0F8240E74E600D55E82 /* SearchDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A0BE240C6C9A00D55E82 /* SearchDataSource.swift */; };
+		6514A106240FF3A400D55E82 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A105240FF3A400D55E82 /* ViewModelFactory.swift */; };
+		6514A108240FF7E100D55E82 /* StretchyHeaderScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A107240FF7E100D55E82 /* StretchyHeaderScrollViewController.swift */; };
+		6514A10924102C2700D55E82 /* StretchyHeaderScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A107240FF7E100D55E82 /* StretchyHeaderScrollViewController.swift */; };
+		6514A10A24102C3900D55E82 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514A105240FF3A400D55E82 /* ViewModelFactory.swift */; };
 		657D370A240AD93600DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
 		657D370C240AE26A00DD21E5 /* DeezerValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */; };
 		657D370E240B0C7100DD21E5 /* DeezerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D3709240AD93600DD21E5 /* DeezerValidator.swift */; };
@@ -164,14 +168,16 @@
 		6514A0C0240C6EDF00D55E82 /* SearchDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataSourceTests.swift; sourceTree = "<group>"; };
 		6514A0C3240CF50100D55E82 /* SearchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlowController.swift; sourceTree = "<group>"; };
 		6514A0C6240CFCD700D55E82 /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
-		6514A0C9240D036500D55E82 /* AlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewController.swift; sourceTree = "<group>"; };
+		6514A0C9240D036500D55E82 /* ArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
 		6514A0CC240D286D00D55E82 /* StateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateViewController.swift; sourceTree = "<group>"; };
 		6514A0CE240D29EC00D55E82 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		6514A0D0240D410700D55E82 /* ArtistAlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistAlbumsViewModel.swift; sourceTree = "<group>"; };
 		6514A0D2240D730500D55E82 /* search-index2-limit2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "search-index2-limit2.json"; sourceTree = "<group>"; };
 		6514A0D3240D730500D55E82 /* search-index0-limit2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "search-index0-limit2.json"; sourceTree = "<group>"; };
 		6514A0D4240D730500D55E82 /* search-index4-limit2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "search-index4-limit2.json"; sourceTree = "<group>"; };
-		6514A0E6240E598F00D55E82 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		6514A0E6240E598F00D55E82 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		6514A105240FF3A400D55E82 /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
+		6514A107240FF7E100D55E82 /* StretchyHeaderScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderScrollViewController.swift; sourceTree = "<group>"; };
 		657D3709240AD93600DD21E5 /* DeezerValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerValidator.swift; sourceTree = "<group>"; };
 		657D370B240AE26A00DD21E5 /* DeezerValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerValidatorTests.swift; sourceTree = "<group>"; };
 		657D370F240B114600DD21E5 /* DeezerServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerServiceTests.swift; sourceTree = "<group>"; };
@@ -263,6 +269,7 @@
 				6514A0C6240CFCD700D55E82 /* UIViewController+Child.swift */,
 				6514A0CC240D286D00D55E82 /* StateViewController.swift */,
 				6514A0CE240D29EC00D55E82 /* LoadingViewController.swift */,
+				6514A107240FF7E100D55E82 /* StretchyHeaderScrollViewController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -270,7 +277,7 @@
 		6514A0C8240D035300D55E82 /* Artist */ = {
 			isa = PBXGroup;
 			children = (
-				6514A0C9240D036500D55E82 /* AlbumsViewController.swift */,
+				6514A0C9240D036500D55E82 /* ArtistViewController.swift */,
 			);
 			path = Artist;
 			sourceTree = "<group>";
@@ -279,7 +286,8 @@
 			isa = PBXGroup;
 			children = (
 				6514A0B4240C495300D55E82 /* Dependencies.swift */,
-				6514A0E6240E598F00D55E82 /* Factory.swift */,
+				6514A0E6240E598F00D55E82 /* ViewControllerFactory.swift */,
+				6514A105240FF3A400D55E82 /* ViewModelFactory.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -290,6 +298,13 @@
 				6514A0D0240D410700D55E82 /* ArtistAlbumsViewModel.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		6514A104240FD4F600D55E82 /* Collection Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Collection Views";
 			sourceTree = "<group>";
 		};
 		65C04A69240931CA00971E09 = {
@@ -318,6 +333,7 @@
 		65C04A74240931CA00971E09 /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				6514A104240FD4F600D55E82 /* Collection Views */,
 				6514A0EA240E5C9300D55E82 /* View Models */,
 				6514A0E8240E5C6900D55E82 /* Dependencies */,
 				6514A0C8240D035300D55E82 /* Artist */,
@@ -627,13 +643,15 @@
 			files = (
 				6514A0B5240C495300D55E82 /* Dependencies.swift in Sources */,
 				6514A0CF240D29EC00D55E82 /* LoadingViewController.swift in Sources */,
-				6514A0E7240E598F00D55E82 /* Factory.swift in Sources */,
+				6514A0E7240E598F00D55E82 /* ViewControllerFactory.swift in Sources */,
 				6514A0C4240CF50100D55E82 /* SearchFlowController.swift in Sources */,
+				6514A108240FF7E100D55E82 /* StretchyHeaderScrollViewController.swift in Sources */,
 				6514A0B7240C4D2600D55E82 /* SearchViewController.swift in Sources */,
 				6514A0D1240D410700D55E82 /* ArtistAlbumsViewModel.swift in Sources */,
-				6514A0CA240D036500D55E82 /* AlbumsViewController.swift in Sources */,
+				6514A0CA240D036500D55E82 /* ArtistViewController.swift in Sources */,
 				6514A0CD240D286D00D55E82 /* StateViewController.swift in Sources */,
 				6514A0BF240C6C9A00D55E82 /* SearchDataSource.swift in Sources */,
+				6514A106240FF3A400D55E82 /* ViewModelFactory.swift in Sources */,
 				65C04A76240931CA00971E09 /* AppDelegate.swift in Sources */,
 				6514A0C7240CFCD700D55E82 /* UIViewController+Child.swift in Sources */,
 			);
@@ -644,13 +662,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6514A0F7240E74DD00D55E82 /* SearchViewController.swift in Sources */,
+				6514A10A24102C3900D55E82 /* ViewModelFactory.swift in Sources */,
 				6514A0F8240E74E600D55E82 /* SearchDataSource.swift in Sources */,
-				6514A0F4240E74BF00D55E82 /* AlbumsViewController.swift in Sources */,
+				6514A0F4240E74BF00D55E82 /* ArtistViewController.swift in Sources */,
 				6514A0F3240E74B000D55E82 /* StateViewController.swift in Sources */,
 				6514A0C2240C701600D55E82 /* Dependencies.swift in Sources */,
 				6514A0C1240C6EDF00D55E82 /* SearchDataSourceTests.swift in Sources */,
-				6514A0E9240E5C7E00D55E82 /* Factory.swift in Sources */,
+				6514A0E9240E5C7E00D55E82 /* ViewControllerFactory.swift in Sources */,
 				6514A0F6240E74D300D55E82 /* LoadingViewController.swift in Sources */,
+				6514A10924102C2700D55E82 /* StretchyHeaderScrollViewController.swift in Sources */,
 				6514A0F5240E74C300D55E82 /* ArtistAlbumsViewModel.swift in Sources */,
 				6514A0F2240E74A200D55E82 /* SearchFlowController.swift in Sources */,
 				65C04A8D240931CC00971E09 /* MusicTests.swift in Sources */,

@@ -10,6 +10,7 @@ import Foundation
 
 struct ArtistAlbumsViewModel {
     var title: String
+    var imageURL: String
     var albums: [AlbumViewModel]
 }
 

@@ -15,7 +15,7 @@ class SearchFlowController: UIViewController {
     private lazy var searchViewController: SearchViewController = {
         let search = SearchViewController(dependencies: dependencies)
         search.didSelectItem = { [weak self] item, indexPath in
-            self?.showAlbumsForArtist(item.id)
+            self?.showAlbumsForArtist(item)
         }
         
         return search
@@ -43,8 +43,11 @@ class SearchFlowController: UIViewController {
         super.viewDidLoad()
     }
     
-    func showAlbumsForArtist(_ id: Int) {
-        let viewController = dependencies.makeAlbumsForArtistViewController(id)
+    func showAlbumsForArtist(_ artist: SearchDatum) {
+        let viewController = dependencies.makeAlbumsForArtistViewController(artist)
+//        { album in
+//            showAlbum(album.id)
+//        }
         ownedNavigationController.pushViewController(viewController, animated: true)
     }
     

@@ -17,11 +17,12 @@ public struct SearchDatum: Codable, Hashable {
     public let type: String
 
     enum CodingKeys: String, CodingKey {
-        case id, name, link, picture
-        case pictureSmall
-        case pictureMedium
-        case pictureBig
-        case pictureXl
+        case id, name, link
+        case picture
+        case pictureSmall = "picture_small"
+        case pictureMedium = "picture_medium"
+        case pictureBig = "picture_big"
+        case pictureXl = "picture_xl"
         case nbAlbum
         case nbFan
         case radio, tracklist, type

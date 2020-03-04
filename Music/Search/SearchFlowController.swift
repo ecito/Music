@@ -45,9 +45,9 @@ class SearchFlowController: UIViewController {
     
     func showAlbumsForArtist(_ artist: SearchDatum) {
         let viewController = dependencies.makeAlbumsForArtistViewController(artist)
-//        { album in
-//            showAlbum(album.id)
-//        }
+        viewController.didSelectItem = { [weak self] (viewModel, indexPath) in
+            self?.showAlbum(viewModel.id)
+        }
         ownedNavigationController.pushViewController(viewController, animated: true)
     }
     

@@ -11,8 +11,8 @@ import DeezerKit
 
 protocol ViewControllerFactory {
     func makeSearchFlowController() -> SearchFlowController
-    func makeAlbumsForArtistViewController(_ artist: SearchDatum) -> StateViewController
-    func makeAlbumViewController(_ id: Int) -> StateViewController
+    func makeAlbumsForArtistViewController(_ artist: SearchDatum) -> ArtistViewController
+    func makeAlbumViewController(_ id: Int) -> AlbumViewController
 }
 
 extension AppDependencies: ViewControllerFactory {
@@ -20,36 +20,25 @@ extension AppDependencies: ViewControllerFactory {
         SearchFlowController(dependencies: self)
     }
     
-    func makeAlbumsForArtistViewController(_ artist: SearchDatum) -> StateViewController {
-        // hmmm do we really wanna have a separate view controller for loading state? hmmm
-        let stateViewController = StateViewController()
-        let contentViewController = ArtistViewController()
-        let stretchyViewController = StretchyHeaderScrollViewController(contentViewController)
-        
-        stretchyViewController.titleLabel.text = artist.name
-        stretchyViewController.headerImageView.loadImage(from: artist.pictureXl ?? artist.picture)
+    func makeAlbumsForArtistViewController(_ artist: SearchDatum) -> ArtistViewController {
+        let artistViewController = ArtistViewController()
 
-        func refresh() {
-            self.deezerService.getAlbumsForArtist(artist.id) { result in
-                switch result {
-                case let .success(albums):
-                    contentViewController.show(self.albumsViewModelFor(artist, artistAlbums: albums))
-                    stateViewController.state = .content(controller: stretchyViewController)
-                case let .failure(error):
-                    print(error)
-                    stateViewController.state = .error(message: "error: \(error)")
-                    break
-                }
+        artistViewController.setLoadingState(.initial(preValue: artist))
+        
+        self.deezerService.getAlbumsForArtist(artist.id) { result in
+            switch result {
+            case let .success(albums):
+                let viewModel = self.albumsViewModelFor(artist, artistAlbums: albums)
+                artistViewController.setLoadingState(.loaded(value: viewModel))
+            case let .failure(error):
+                artistViewController.setLoadingState(.failed(error: error))
             }
         }
 
-        // just trying to think how to handle refresh/retry if we take the data fetching out of the view controller
-        refresh()
-
-        return stateViewController
+        return artistViewController
     }
     
-    func makeAlbumViewController(_ id: Int) -> StateViewController {
-        return StateViewController()
+    func makeAlbumViewController(_ id: Int) -> AlbumViewController {
+        return AlbumViewController()
     }
 }

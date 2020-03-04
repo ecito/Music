@@ -9,45 +9,39 @@
 import UIKit
 import DeezerKit
 
-class ArtistAlbumTableViewCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.backgroundColor = .black
-        self.textLabel?.textColor = .white
+class ArtistViewController: UIViewController, HasLoadingState {
+    typealias PreLoadingValue = SearchDatum
+    typealias LoadingValue = ArtistAlbumsViewModel
+    typealias LoadingError = DeezerError
+    
+    lazy var albumsTableViewController = AlbumsTableViewController()
+    lazy var stretchyViewController = StretchyHeaderScrollViewController(albumsTableViewController)
+    
+    var didSelectItem: (AlbumViewModel, IndexPath) -> () = { _, _ in } {
+        didSet {
+            self.albumsTableViewController.didSelectItem = didSelectItem
+        }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class ArtistViewController: UITableViewController {
-
-    var albums = [AlbumViewModel]()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .clear
-        title = "Albums"
-        tableView.register(ArtistAlbumTableViewCell.self, forCellReuseIdentifier: "Cell")
+    override func loadView() {
+        view = UIView()
+        install(stretchyViewController)
     }
     
-    func show(_ albums: ArtistAlbumsViewModel) {
-        title = albums.title
-    
-        self.albums = albums.albums
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        albums.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = albums[indexPath.row].title
-        
-        cell.imageView?.loadImage(from: albums[indexPath.row].imageURL,
-                                  placeHolder: UIImage(named: "album-placeholder"))
-        return cell
+    func setLoadingState(_ state: LoadingState<SearchDatum, ArtistAlbumsViewModel, DeezerError>) {
+        switch state {
+        case let .initial(artist):
+            stretchyViewController.titleLabel.text = artist.name
+            stretchyViewController.headerImageView.loadImage(from: artist.pictureXl ?? artist.picture)
+        case .loading:
+            // show a spinner? for example
+            break
+        case .reloading:
+            break
+        case .loaded(let value):
+            albumsTableViewController.show(value)
+        case .failed(let error):
+            print(error)
+        }
     }
 }

@@ -8,21 +8,29 @@
 
 import UIKit
 
-public final class StateViewController: UIViewController {
+enum LoadingState<PreValue, Value, Error> {
+    case initial(preValue: PreValue)
+    case loading
+    case reloading
+    case loaded(value: Value)
+    case failed(error: Error)
+}
 
-    public enum State {
-        case loading(message: String)
-        case content(controller: UIViewController)
-        case error(message: String)
-        case empty(message: String)
-    }
+protocol HasLoadingState {
+    associatedtype PreLoadingValue
+    associatedtype LoadingValue
+    associatedtype LoadingError
+    
+    func setLoadingState(_ state: LoadingState<PreLoadingValue, LoadingValue, LoadingError>)
+}
 
-    public var state: State = .loading(message: "Loading") {
-        didSet {
-            applyState()
-        }
-    }
-
+public final class StateViewController: UIViewController, HasLoadingState {
+    typealias PreLoadingValue = String
+    typealias LoadingValue = UIViewController
+    typealias LoadingError = ApplicationError
+    
+    var loadingViewController: UIViewController { LoadingViewController() }
+    
     private var contentController: UIViewController? {
         didSet {
             guard contentController != oldValue else { return }
@@ -31,21 +39,26 @@ public final class StateViewController: UIViewController {
         }
     }
 
-    private func viewController(for state: State) -> UIViewController {
+    private func viewController(for state: LoadingState<String, UIViewController, ApplicationError>) -> UIViewController {
         switch state {
-        case .loading(let _):
-            return LoadingViewController()
-        case .empty(let _), .error(let _):
-            return LoadingViewController()
-        case .content(let controller):
-            return controller
+        case .initial:
+            return loadingViewController
+        case .loading:
+            fallthrough
+        case .reloading:
+            return loadingViewController
+        case .loaded(let viewController):
+            return viewController
+        case .failed(let error):
+            print(error)
+            return loadingViewController
         }
     }
 
-    private func applyState() {
+    func setLoadingState(_ state: LoadingState<String, UIViewController, ApplicationError>) {
         contentController = viewController(for: state)
     }
-
+    
     private func swapContent(newValue: UIViewController?, oldValue: UIViewController?) {
         oldValue?.view.removeFromSuperview()
         oldValue?.removeFromParent()
@@ -58,8 +71,7 @@ public final class StateViewController: UIViewController {
 
     public override func loadView() {
         view = UIView()
-
-        applyState()
+        contentController = loadingViewController
     }
 
 }

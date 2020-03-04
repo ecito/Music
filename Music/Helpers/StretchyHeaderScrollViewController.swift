@@ -65,7 +65,12 @@ class StretchyHeaderScrollViewController: UIViewController {
         containerView.backgroundColor = .clear
         containerView.addSubview(titleLabel)
         childTableView.tableHeaderView = containerView
-
+        
+        // make a footerview so the image doesn't peek below 1 cell tables
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
+        footerView.backgroundColor = .black
+        childTableView.tableFooterView = footerView
+        
         // add content view
         addChild(contentViewController)
         view.addSubview(contentViewController.view)

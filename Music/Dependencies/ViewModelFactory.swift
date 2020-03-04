@@ -16,7 +16,7 @@ protocol ViewModelFactory {
 extension AppDependencies: ViewModelFactory {
     func albumsViewModelFor(_ artist: SearchDatum, artistAlbums: ArtistAlbums) -> ArtistAlbumsViewModel {
         let albums = artistAlbums.data.map { datum in
-            AlbumViewModel(imageURL: datum.cover, title: datum.title)
+            AlbumViewModel(id: datum.id,imageURL: datum.cover, title: datum.title)
         }
         
         return ArtistAlbumsViewModel(title: artist.name, imageURL: artist.pictureXl ?? artist.picture, albums: albums)

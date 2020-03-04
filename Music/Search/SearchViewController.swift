@@ -44,6 +44,7 @@ class SearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.separatorColor = .clear
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: SearchDataSource.cellIdentifier)
         tableView.dataSource = searchDataSource.tableViewDataSource
         navigationItem.searchController = searchController

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.overrideUserInterfaceStyle = .dark
 
         let dependencies = AppDependencies()
-        window?.rootViewController = dependencies.makeSearchFlowController()
+        window?.rootViewController = dependencies.makeMainTabBarController()
         window?.makeKeyAndVisible()
         
         return true

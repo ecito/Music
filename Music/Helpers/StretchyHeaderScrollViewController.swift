@@ -1,5 +1,5 @@
 //
-//  StretchyHeaderScrollViewController.swift
+//  StretchyHeaderTableViewController.swift
 //  Music
 //
 //  Created by Andre Navarro on 3/4/20.
@@ -8,19 +8,10 @@
 
 import UIKit
 
-/// View controller container with an imageview, title and tableview as content.
+/// View controller container with an imageview, title and scrollView as content.
 /// inspired by spotify (BLASPHEMY!)
-class StretchyHeaderScrollViewController: UIViewController {
-    var headerHeight: CGFloat
-    
-    lazy var headerImageView: UIImageView = {
-        let view = UIImageView(frame: .zero)
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
-        view.backgroundColor = .black
-        return view
-    }()
-    
+
+class StretychHeaderTitleView: UIView {
     lazy var titleLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.font = .boldSystemFont(ofSize: 40)
@@ -32,51 +23,107 @@ class StretchyHeaderScrollViewController: UIViewController {
         view.numberOfLines = 2
         return view
     }()
+        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .clear
+        addSubview(titleLabel)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        titleLabel.frame = CGRect(x: 0, y: frame.size.height - 100, width: frame.size.width, height: 100)
+    }
+}
+
+class StretchyHeaderScrollViewController: UIViewController {
+    var headerHeight: CGFloat
+    
+    lazy var headerImageView: UIImageView = {
+        let view = UIImageView(frame: .zero)
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.backgroundColor = .black
+        return view
+    }()
+
     var contentViewController: UIViewController
-    var childTableView: UITableView
+    var childScrollView: UIScrollView
+    var headerView: UIView?
+    
     private var didSetInitialFrames = false
+    private var contentOffsetObservation: NSKeyValueObservation?
     
     deinit {
-        childTableView.removeObserver(self, forKeyPath: "contentOffset")
+        contentOffsetObservation?.invalidate()
     }
     
-    init(_ contentViewController: UIViewController, headerHeight: CGFloat = 400) {
-        self.contentViewController = contentViewController
+    init(headerView: UIView? = nil, headerHeight: CGFloat = 400) {
+        // dummies
+        self.contentViewController = UIViewController()
+        self.childScrollView = UIScrollView()
+        self.childScrollView.contentSize = UIScreen.main.bounds.size
+
+        self.headerView = headerView
         self.headerHeight = headerHeight
+
+        super.init(nibName: nil, bundle: nil)
         
-        if !(contentViewController.view is UITableView) {
-            fatalError("this container only works for view controllers with a scrollView as main view")
+        setContentViewController(self.contentViewController, scrollView: self.childScrollView)
+    }
+    
+    func setContentViewController(_ contentViewController: UIViewController, scrollView: UIScrollView? = nil) {
+        cleanUp()
+        
+        self.contentViewController = contentViewController
+        if let scrollViewToUse = scrollView {
+            self.childScrollView = scrollViewToUse
+            view.addSubview(scrollViewToUse)
+        }
+        else if let scrollViewToUse = contentViewController.view as? UIScrollView {
+            self.childScrollView = scrollViewToUse
+            view.addSubview(contentViewController.view)
+        }
+        else {
+            fatalError("this container needs a scrollView to function")
         }
         
-        self.childTableView = contentViewController.view as! UITableView
+        if let headerView = headerView {
+            childScrollView.addSubview(headerView)
+        }
+        childScrollView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
         
-        super.init(nibName: nil, bundle: nil)
+        // add content view
+        addChild(contentViewController)
+        contentViewController.didMove(toParent: self)
+        
+        contentOffsetObservation = childScrollView.observe(\.contentOffset) { [weak self] scrollView, contentOffset in
+            self?.updatedContentOffset()
+        }
+        
+        setFrames()
     }
+    
+    func cleanUp() {
+        contentOffsetObservation?.invalidate()
         
+        contentViewController.remove()
+        childScrollView.contentInset = .zero
+        if let headerView = headerView,
+            childScrollView.subviews.contains(headerView) {
+            headerView.removeFromSuperview()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .black
-
-        // set up header
         view.addSubview(headerImageView)
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: headerHeight))
-        containerView.backgroundColor = .clear
-        containerView.addSubview(titleLabel)
-        childTableView.tableHeaderView = containerView
-        
-        // make a footerview so the image doesn't peek below 1 cell tables
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
-        footerView.backgroundColor = .black
-        childTableView.tableFooterView = footerView
-        
-        // add content view
-        addChild(contentViewController)
-        view.addSubview(contentViewController.view)
-        contentViewController.didMove(toParent: self)
-        
-        childTableView.addObserver(self, forKeyPath: "contentOffset", options: .new, context: nil)
     }
     
     override func viewWillLayoutSubviews() {
@@ -90,41 +137,41 @@ class StretchyHeaderScrollViewController: UIViewController {
     }
         
     private func setFrames() {
+        childScrollView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        headerView?.frame = CGRect(x: 0, y: -headerHeight, width: self.view.bounds.width, height: headerHeight)
         headerImageView.frame = CGRect(x: 0,
                                        y: self.view.safeAreaInsets.top,
                                        width: self.view.bounds.width,
                                        height: self.view.bounds.width)
         
-        titleLabel.frame = CGRect(x: 0, y: headerHeight - 100, width: self.view.frame.width, height: 100)
         contentViewController.view.frame = view.bounds
     }
     
-    override func observeValue(forKeyPath _: String?,
-                               of _: Any?,
-                               change : [NSKeyValueChangeKey: Any]?, context _: UnsafeMutableRawPointer?) {
-
-        let tableViewYOffset = -childTableView.contentOffset.y - self.view.safeAreaInsets.top
-        
+    
+    private func updatedContentOffset() {
+        return
+        let tableViewYOffset = -childScrollView.contentOffset.y - self.view.safeAreaInsets.top - headerHeight
+                
         if tableViewYOffset > 0 {
             updateHeaderImageHeight(tableViewYOffset)
         }
         else {
-            updateHeaderImageAlpha(tableViewYOffset)
+            updateHeaderImageChill(tableViewYOffset)
         }
     }
 
     private func updateHeaderImageHeight(_ tableViewYOffset: CGFloat) {
         let originalHeight = self.view.bounds.width
-        let height = originalHeight + tableViewYOffset
+        let height = originalHeight + tableViewYOffset - childScrollView.contentInset.top + headerHeight
         headerImageView.frame = CGRect(x: 0, y: self.view.safeAreaInsets.top, width: self.view.bounds.width, height: height)
     }
     
-    private func updateHeaderImageAlpha(_ tableViewYOffset: CGFloat) {
-        if let tableHeaderViewHeight = childTableView.tableHeaderView?.frame.size.height,
-            tableHeaderViewHeight > 0 {
-            let alpha = -(-1 - (tableViewYOffset / tableHeaderViewHeight))
-            if 0...1 ~= alpha {
-                headerImageView.alpha = alpha
+    private func updateHeaderImageChill(_ tableViewYOffset: CGFloat) {
+        if headerHeight > 0 {
+            let percentageOfChill = -(-1 - (tableViewYOffset / headerHeight))
+            if 0...1 ~= percentageOfChill {
+                headerImageView.transform = CGAffineTransform(scaleX: percentageOfChill, y: percentageOfChill)
+                headerImageView.alpha = percentageOfChill
             }
         }
     }

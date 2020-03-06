@@ -14,7 +14,8 @@ class AlbumViewController: UIViewController, HasLoadingState {
     typealias LoadingError = ApplicationError
     
     lazy var tracksTableViewController = TracksTableViewController()
-    lazy var stretchyViewController = StretchyHeaderScrollViewController(tracksTableViewController)
+    lazy var titleView = StretychHeaderTitleView()
+    lazy var stretchyViewController = StretchyHeaderScrollViewController(headerView: titleView)
         
     override func loadView() {
         view = UIView()
@@ -24,7 +25,7 @@ class AlbumViewController: UIViewController, HasLoadingState {
     func setLoadingState(_ state: LoadingState<AlbumViewModel, AlbumTracksViewModel, ApplicationError>) {
         switch state {
         case let .initial(album):
-            stretchyViewController.titleLabel.text = album.title
+            titleView.titleLabel.text = album.title
             stretchyViewController.headerImageView.loadImage(from: album.imageURL)
         case .loading:
             // show a spinner? for example

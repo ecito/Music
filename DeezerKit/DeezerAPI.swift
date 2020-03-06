@@ -10,6 +10,7 @@ import Foundation
 import NetworkKit
 
 enum DeezerAPI {
+    case chart
     case searchArtists(text: String, index: Int?, limit: Int?)
     case albumsForArtist(id: Int, index: Int?, limit: Int?)
     case album(id: Int)
@@ -27,6 +28,8 @@ extension DeezerAPI: TargetType {
 
     var path: String {
         switch self {
+        case .chart:
+            return "chart"
         case .searchArtists:
             return "search/artist"
         case let .albumsForArtist(id, _, _):
@@ -62,6 +65,8 @@ extension DeezerAPI: TargetType {
         var filename = ""
 
         switch self {
+        case .chart:
+            filename = "chart"
         case let .searchArtists(_, index, limit):
             if let index = index,
                 let limit = limit {

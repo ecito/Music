@@ -8,13 +8,15 @@
 
 import Foundation
 
-struct ArtistAlbumsViewModel {
+struct ArtistAlbumsViewModel: DeezerCollectionItemSectionViewModel {
     let title: String
     let imageURL: String
     let albums: [AlbumViewModel]
+    
+    var items: [DeezerCollectionItemViewModel] { albums }
 }
 
-struct AlbumViewModel {
+struct AlbumViewModel: DeezerCollectionItemViewModel {
     let id: Int
     let imageURL: String
     let title: String

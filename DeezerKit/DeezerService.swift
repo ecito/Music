@@ -17,6 +17,13 @@ public class DeezerService {
     }
 
     @discardableResult
+    public func getChart(completion: @escaping (Result<Chart, DeezerError>) -> Void) -> Cancellable {
+        performNetworkRequest(DeezerAPI.chart,
+                              responseType: Chart.self,
+                              completion: completion)
+    }
+    
+    @discardableResult
     public func searchArtistsWith(text: String, index: Int? = nil, limit: Int? = nil, completion: @escaping (Result<Search, DeezerError>) -> Void) -> Cancellable {
         performNetworkRequest(DeezerAPI.searchArtists(text: text, index: index, limit: limit),
                               responseType: Search.self,

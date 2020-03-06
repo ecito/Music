@@ -11,6 +11,8 @@ import DeezerKit
 
 protocol ViewModelFactory {
     func albumsViewModelFor(_ artist: SearchDatum, artistAlbums: ArtistAlbums) -> ArtistAlbumsViewModel
+    func albumTracksViewModelFor(_ album: AlbumViewModel, tracks: Tracks) -> AlbumTracksViewModel
+    func chartViewModelFor(_ chart: Chart) -> [ChartViewModel]
 }
 
 extension AppDependencies: ViewModelFactory {
@@ -30,5 +32,28 @@ extension AppDependencies: ViewModelFactory {
         // TODO: separate tracks into disks ?
         
         return AlbumTracksViewModel(id: album.id, tracks: [tracks])
+    }
+    
+    func chartViewModelFor(_ chart: Chart) -> [ChartViewModel] {
+            let viewModels: [ChartViewModel] =
+                [ChartTracksViewModel(items: chart.tracks.data.map {
+                    ChartTrackViewModel(imageURL: $0.artist.pictureBig ?? $0.artist.picture ?? "",
+                                        title: $0.title,
+                                        trackNumber: $0.trackPosition ?? 0)
+                }),
+                 ChartAlbumsViewModel(items: chart.albums.data.map {
+                    AlbumViewModel(id: $0.id,
+                                   imageURL: $0.coverBig ?? $0.cover,
+                                   title: $0.title)
+                 }),
+                 ChartArtistsViewModel(items: chart.artists.data.map {
+                    ArtistViewModel(imageURL: $0.picture ?? "", title: $0.name)
+                 }),
+                 ChartPlaylistsViewModel(items: chart.playlists.data.map {
+                    PlaylistViewModel(imageURL: $0.pictureBig ?? $0.picture, title: $0.title)
+                 })
+            ]
+            
+            return viewModels
     }
 }

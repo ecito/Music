@@ -20,4 +20,5 @@ struct AlbumViewModel: DeezerCollectionItemViewModel {
     let id: Int
     let imageURL: String
     let title: String
+    let link: String?
 }

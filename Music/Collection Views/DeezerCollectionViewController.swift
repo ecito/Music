@@ -11,6 +11,7 @@ import UIKit
 protocol DeezerCollectionItemViewModel {
     var title: String { get }
     var imageURL: String { get }
+    var link: String? { get }
 }
 
 protocol DeezerCollectionItemSectionViewModel {

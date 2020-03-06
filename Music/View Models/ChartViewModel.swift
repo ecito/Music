@@ -34,14 +34,17 @@ struct ChartTrackViewModel: DeezerCollectionItemViewModel {
     var imageURL: String
     var title: String
     var trackNumber: Int
+    let link: String?
 }
 
 struct ArtistViewModel: DeezerCollectionItemViewModel {
     var imageURL: String
     var title: String
+    let link: String?
 }
 
 struct PlaylistViewModel: DeezerCollectionItemViewModel {
     var imageURL: String
     var title: String
+    let link: String?
 }

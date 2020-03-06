@@ -18,7 +18,7 @@ protocol ViewModelFactory {
 extension AppDependencies: ViewModelFactory {
     func albumsViewModelFor(_ artist: SearchDatum, artistAlbums: ArtistAlbums) -> ArtistAlbumsViewModel {
         let albums = artistAlbums.data.map { datum in
-            AlbumViewModel(id: datum.id,imageURL: datum.coverBig ?? datum.cover, title: datum.title)
+            AlbumViewModel(id: datum.id,imageURL: datum.coverBig ?? datum.cover, title: datum.title, link: datum.link)
         }
         
         return ArtistAlbumsViewModel(title: artist.name, imageURL: artist.pictureXl ?? artist.picture, albums: albums)
@@ -39,18 +39,20 @@ extension AppDependencies: ViewModelFactory {
                 [ChartTracksViewModel(items: chart.tracks.data.map {
                     ChartTrackViewModel(imageURL: $0.artist.pictureBig ?? $0.artist.picture ?? "",
                                         title: $0.title,
-                                        trackNumber: $0.trackPosition ?? 0)
+                                        trackNumber: $0.trackPosition ?? 0,
+                                        link: $0.link)
                 }),
                  ChartAlbumsViewModel(items: chart.albums.data.map {
                     AlbumViewModel(id: $0.id,
                                    imageURL: $0.coverBig ?? $0.cover,
-                                   title: $0.title)
+                                   title: $0.title,
+                                   link: $0.link)
                  }),
                  ChartArtistsViewModel(items: chart.artists.data.map {
-                    ArtistViewModel(imageURL: $0.picture ?? "", title: $0.name)
+                    ArtistViewModel(imageURL: $0.picture ?? "", title: $0.name, link: nil)
                  }),
                  ChartPlaylistsViewModel(items: chart.playlists.data.map {
-                    PlaylistViewModel(imageURL: $0.pictureBig ?? $0.picture, title: $0.title)
+                    PlaylistViewModel(imageURL: $0.pictureBig ?? $0.picture, title: $0.title, link: $0.link)
                  })
             ]
             

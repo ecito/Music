@@ -19,7 +19,7 @@ class HomeViewController: UIViewController, HasLoadingState {
     
     var items = [DeezerCollectionItemSectionViewModel]()
     
-    var didSelectItem: (DeezerCollectionItemViewModel, IndexPath) -> () = { _, _ in } 
+    var didSelectItem: (DeezerCollectionItemViewModel, IndexPath) -> () = { _, _ in }
     
     init(dependencies: HasDeezerService & ViewControllerFactory & ViewModelFactory) {
         self.dependencies = dependencies
@@ -106,7 +106,11 @@ class HomeFlowController: UIViewController {
     }
     
     func show(_ viewModel: DeezerCollectionItemViewModel) {
-        // hmmm ... ok stop it, feature creeping too much now
         print(viewModel)
+        
+        if let urlString = viewModel.link,
+            let url = URL(string: urlString) {
+            UIApplication.shared.open(url)
+        }
     }
 }

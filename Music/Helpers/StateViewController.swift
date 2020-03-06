@@ -13,9 +13,9 @@ public final class StateViewController: UIViewController, HasLoadingState {
     typealias PreLoadingValue = String
     typealias LoadingValue = UIViewController
     typealias LoadingError = ApplicationError
-    
+
     var loadingViewController: UIViewController { LoadingViewController() }
-    
+
     private var contentController: UIViewController? {
         didSet {
             guard contentController != oldValue else { return }
@@ -43,7 +43,7 @@ public final class StateViewController: UIViewController, HasLoadingState {
     func setLoadingState(_ state: LoadingState<String, UIViewController, ApplicationError>) {
         contentController = viewController(for: state)
     }
-    
+
     private func swapContent(newValue: UIViewController?, oldValue: UIViewController?) {
         oldValue?.view.removeFromSuperview()
         oldValue?.removeFromParent()

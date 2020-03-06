@@ -13,7 +13,7 @@ import NetworkKit
 
 class DeezerKitTests: XCTestCase {
     var network = MockNetwork()
-    
+
     func testSearch() {
         let expectation = XCTestExpectation(description: "should get search response")
 
@@ -28,17 +28,17 @@ class DeezerKitTests: XCTestCase {
                     XCTFail("got network error \(error)")
                 }
         }
-        
+
         wait(for: [expectation], timeout: 5)
     }
-    
+
     func testGetArtistAlbums() {
         let expectation = XCTestExpectation(description: "should get albums response")
 
         network
             .request(DeezerAPI.albumsForArtist(id: 1, index: nil, limit: nil))
             .responseDecoded(of: ArtistAlbums.self, errorType: DeezerAPIError.self) { response in
-            
+
                 switch response.result {
                 case let .success(albums):
                     XCTAssertEqual(albums.data.count, 25, "should have 25 album results")
@@ -47,10 +47,10 @@ class DeezerKitTests: XCTestCase {
                     XCTFail("got network error \(error)")
                 }
         }
-        
+
         wait(for: [expectation], timeout: 5)
     }
-    
+
     func testGetAlbum() {
         let expectation = XCTestExpectation(description: "should get album response")
 
@@ -65,17 +65,17 @@ class DeezerKitTests: XCTestCase {
                     XCTFail("got network error \(error)")
                 }
         }
-        
+
         wait(for: [expectation], timeout: 5)
     }
-    
+
     func testGetAlbumTracks() {
         let expectation = XCTestExpectation(description: "should get album tracks response")
-        
+
         network
             .request(DeezerAPI.tracksForAlbum(id: 1109731, index: nil, limit: nil))
             .responseDecoded(of: Tracks.self, errorType: DeezerAPIError.self) { response in
-                
+
                 switch response.result {
                 case let .success(tracks):
                     XCTAssertEqual(tracks.data.count, 4, "should have 4 tracks")
@@ -84,10 +84,10 @@ class DeezerKitTests: XCTestCase {
                     XCTFail("got network error \(error)")
                 }
         }
-        
+
         wait(for: [expectation], timeout: 5)
     }
-    
+
     func testErrorResponse() {
         let expectation = XCTestExpectation(description: "should get search response")
 
@@ -103,26 +103,25 @@ class DeezerKitTests: XCTestCase {
                     if case let .errorResponse(model) = error,
                         let errorModel = model as? DeezerAPIError {
                         XCTAssertEqual(errorModel.code, .dataNotFound, "should have error code 800")
-                    }
-                    else {
+                    } else {
                         XCTFail("should have an error model")
                     }
                     expectation.fulfill()
                 }
         }
-        
+
         wait(for: [expectation], timeout: 5)
     }
-    
+
     func testDeezerQueryParameters() {
         let parameters = ["query": "this"]
         let query = QueryParameters.deezerQueryParameters(parameters, index: nil, limit: nil)
         XCTAssertEqual(query?.queryItems.count, 1)
         XCTAssertEqual(query?.queryItems[0], URLQueryItem(name: "query", value: "this"))
-        
+
         let indexedQuery = QueryParameters.deezerQueryParameters(parameters, index: 2, limit: 4)
         XCTAssertEqual(indexedQuery?.queryItems.count, 3)
-        
+
         let firstQuery = indexedQuery?.queryItems.first(where: { $0.name == "query" })
         XCTAssertNotNil(firstQuery, "should have query Item")
         XCTAssertEqual(firstQuery?.value, "this")

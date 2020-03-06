@@ -43,11 +43,11 @@ public struct SearchDatum: Codable, Hashable {
         self.tracklist = tracklist
         self.type = type
     }
-    
+
     public static func == (lhs: SearchDatum, rhs: SearchDatum) -> Bool {
         lhs.id == rhs.id
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

@@ -18,22 +18,22 @@ protocol ViewModelFactory {
 extension AppDependencies: ViewModelFactory {
     func albumsViewModelFor(_ artist: SearchDatum, artistAlbums: ArtistAlbums) -> ArtistAlbumsViewModel {
         let albums = artistAlbums.data.map { datum in
-            AlbumViewModel(id: datum.id,imageURL: datum.coverBig ?? datum.cover, title: datum.title, link: datum.link)
+            AlbumViewModel(id: datum.id, imageURL: datum.coverBig ?? datum.cover, title: datum.title, link: datum.link)
         }
-        
+
         return ArtistAlbumsViewModel(title: artist.name, imageURL: artist.pictureXl ?? artist.picture, albums: albums)
     }
-    
+
     func albumTracksViewModelFor(_ album: AlbumViewModel, tracks: Tracks) -> AlbumTracksViewModel {
         let tracks = tracks.data.map { track in
             TrackViewModel(title: track.title, trackNumber: track.trackPosition ?? 0)
         }
-        
+
         // TODO: separate tracks into disks ?
-        
+
         return AlbumTracksViewModel(id: album.id, tracks: [tracks])
     }
-    
+
     func chartViewModelFor(_ chart: Chart) -> [ChartViewModel] {
             let viewModels: [ChartViewModel] =
                 [ChartTracksViewModel(items: chart.tracks.data.map {
@@ -55,7 +55,7 @@ extension AppDependencies: ViewModelFactory {
                     PlaylistViewModel(imageURL: $0.pictureBig ?? $0.picture, title: $0.title, link: $0.link)
                  })
             ]
-            
+
             return viewModels
     }
 }

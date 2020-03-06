@@ -15,6 +15,6 @@ import DeezerKit
 class MusicTests: XCTestCase {
 
     func test() {
-        
+
     }
 }

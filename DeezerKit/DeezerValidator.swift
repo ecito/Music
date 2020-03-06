@@ -15,7 +15,7 @@ struct DeezerValidator: ResponseValidator {
             let _ = try? JSONDecoder().decode(DeezerAPIError.self, from: data) {
             return false
         }
-        
+
         return DefaultResponseValidator().validate(data: data, urlResponse: urlResponse, error: error)
     }
 }

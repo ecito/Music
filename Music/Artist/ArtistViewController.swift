@@ -13,18 +13,18 @@ class ArtistViewController: UIViewController, HasLoadingState {
     typealias PreLoadingValue = SearchDatum
     typealias LoadingValue = ArtistAlbumsViewModel
     typealias LoadingError = ApplicationError
-        
+
     lazy var titleView = StretychHeaderTitleView()
     lazy var stretchyViewController = StretchyHeaderScrollViewController(headerView: titleView)
 
     lazy var albumsTableViewController = AlbumsTableViewController()
-        
-    var didSelectItem: (AlbumViewModel, IndexPath) -> () = { _, _ in } {
+
+    var didSelectItem: (AlbumViewModel, IndexPath) -> Void = { _, _ in } {
         didSet {
             self.albumsTableViewController.didSelectItem = didSelectItem
         }
     }
-    
+
     private var dependencies: HasDeezerService & ViewControllerFactory
 
     init(dependencies: HasDeezerService & ViewControllerFactory) {
@@ -35,12 +35,12 @@ class ArtistViewController: UIViewController, HasLoadingState {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         view = UIView()
         install(stretchyViewController)
     }
-    
+
     func setLoadingState(_ state: LoadingState<SearchDatum, ArtistAlbumsViewModel, ApplicationError>) {
         switch state {
         case let .initial(artist):

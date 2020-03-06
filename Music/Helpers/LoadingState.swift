@@ -20,6 +20,6 @@ protocol HasLoadingState {
     associatedtype PreLoadingValue
     associatedtype LoadingValue
     associatedtype LoadingError
-    
+
     func setLoadingState(_ state: LoadingState<PreLoadingValue, LoadingValue, LoadingError>)
 }

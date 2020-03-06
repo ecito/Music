@@ -8,7 +8,7 @@
 
 import UIKit
 
-fileprivate func makeDefaultLayout() -> UICollectionViewFlowLayout {
+private func makeDefaultLayout() -> UICollectionViewFlowLayout {
     let layout = UICollectionViewFlowLayout()
     let margin = CGFloat(16)
 
@@ -32,13 +32,13 @@ public final class GenericCollectionViewController<
     public init(viewType: CellView.Type,
                 sectionTitleViewType: TitleView.Type? = nil,
                 layout: UICollectionViewLayout? = nil) {
-        
+
         super.init(collectionViewLayout: layout ?? makeDefaultLayout())
-        
+
         if sectionTitleViewType != nil {
             let sectionTitleElementKind = "title-kind"
             let sectionTitleReuseIdentifier = "title-id"
-            
+
             self.collectionView.register(TitleContainer.self, forSupplementaryViewOfKind: sectionTitleElementKind, withReuseIdentifier: sectionTitleReuseIdentifier)
         }
     }
@@ -59,19 +59,19 @@ public final class GenericCollectionViewController<
         }
     }
 
-    public var configureView: (IndexPath, CellView) -> () = { _, _ in } {
+    public var configureView: (IndexPath, CellView) -> Void = { _, _ in } {
         didSet {
             collectionView?.reloadData()
         }
     }
-    
-    public var configureTitle: (IndexPath, TitleView) -> () = { _, _ in } {
+
+    public var configureTitle: (IndexPath, TitleView) -> Void = { _, _ in } {
         didSet {
             collectionView?.reloadData()
         }
     }
-    
-    public var didSelectView: (IndexPath, CellView) -> () = { _, _ in }
+
+    public var didSelectView: (IndexPath, CellView) -> Void = { _, _ in }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,9 +108,9 @@ public final class GenericCollectionViewController<
         guard let title = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "title-id", for: indexPath) as? TitleContainer else {
             fatalError("unexpected supplementary type dequeued from collection view")
         }
-        
+
         configureTitle(indexPath, title.view)
-        
+
         return title
     }
 }

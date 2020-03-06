@@ -26,13 +26,13 @@ public class SearchDataSource {
     public static var cellIdentifier = "Cell"
     public var searchLimit: Int = 25
     public static var debounceMilliseconds: Int = 200
-    
+
     public var lastSearchText: String?
     public var lastSearch: Search?
     public var lastIndex: Int = 0
-    
+
     public var searchItems = [SearchDatum]()
-    
+
     init(dependencies: HasDeezerService,
          tableView: UITableView,
          cellProvider: @escaping SearchDiffableDataSource.CellProvider) {
@@ -40,7 +40,7 @@ public class SearchDataSource {
         self.tableView = tableView
         self.cellProvider = cellProvider
     }
-    
+
     lazy var tableViewDataSource: SearchDiffableDataSource = {
         return UITableViewDiffableDataSource(tableView: tableView, cellProvider: cellProvider)
     }()
@@ -49,18 +49,18 @@ public class SearchDataSource {
         searchItems = searchItems + items
         apply(items)
     }
-    
+
     private func apply(_ items: [SearchDatum]) {
         var snapshot = tableViewDataSource.snapshot()
-        
+
         if snapshot.numberOfSections == 0 {
             snapshot.appendSections(SearchSection.allCases)
         }
-        
+
         snapshot.appendItems(items)
         tableViewDataSource.apply(snapshot, animatingDifferences: false)
     }
-    
+
     private func clear() {
         lastSearchText = nil
         lastSearch = nil
@@ -69,12 +69,12 @@ public class SearchDataSource {
         tableViewDataSource.apply(SearchDiffableSnapShot(),
                                   animatingDifferences: false)
     }
-    
+
     public func cancelSearch() {
         cancellableSearch?.cancel()
         pendingRequestWorkItem?.cancel()
     }
-    
+
     public func search(_ text: String,
                        index: Int? = nil,
                        completion: ((Result<Void, DeezerError>) -> Void)? = nil) {
@@ -82,17 +82,17 @@ public class SearchDataSource {
             clear()
             return
         }
-        
+
         // if we try to search the same text with no index then something is wrong
         guard !(lastSearchText == text && index == nil) else {
             return
         }
-        
+
         // this is a new search so clear all our state
         if lastSearchText != text {
             clear()
         }
-        
+
         startSearch(text, index: index) { result in
             switch result {
             case let .success(search):
@@ -103,11 +103,11 @@ public class SearchDataSource {
             case let .failure(error):
                 print("did error search \(error)")
             }
-            
+
             completion?(result.map { _ in () })
         }
     }
-    
+
     private func startSearch(_ text: String,
                                index: Int? = nil,
                                completion: @escaping (Result<Search, DeezerError>) -> Void) {
@@ -117,14 +117,14 @@ public class SearchDataSource {
             guard let self = self else {
                 return
             }
-            
+
             self.cancellableSearch =
                 self.dependencies.deezerService
                     .searchArtistsWith(text: text,
                                        index: index,
                                        limit: self.searchLimit) { result in
                                         self.cancellableSearch = nil
-                                        
+
                                         completion(result)
             }
         }
@@ -133,7 +133,7 @@ public class SearchDataSource {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Self.debounceMilliseconds),
                                       execute: pendingRequestWorkItem!)
     }
-    
+
     func loadMoreIfNeeded(with indexPath: IndexPath) {
         guard let text = lastSearchText else {
             return
@@ -142,7 +142,7 @@ public class SearchDataSource {
         guard let _ = lastSearch?.next else {
             return
         }
-        
+
         if searchItems.count == indexPath.row + 1 {
             search(text, index: lastIndex)
         }

@@ -46,11 +46,11 @@ public final class ContainerCollectionSupplementaryView<V: UIView>: UICollection
         super.init(frame: frame)
         setup()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
+
     private func setup() {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)

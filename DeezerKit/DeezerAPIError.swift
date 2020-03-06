@@ -20,7 +20,7 @@ public struct DeezerAPIError: Error, Decodable {
         case queryInvalid = 600
         case serviceBusy = 700
         case dataNotFound = 800
-        
+
         case unknown
     }
 
@@ -31,13 +31,13 @@ public struct DeezerAPIError: Error, Decodable {
     enum LevelUpCodingKeys: String, CodingKey {
         case error
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case type
         case message
         case code
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: LevelUpCodingKeys.self)
         let errorContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .error)
@@ -69,4 +69,3 @@ extension DeezerAPIError: LocalizedError {
  DATA_NOT_FOUND    DataException    800
 
  */
-

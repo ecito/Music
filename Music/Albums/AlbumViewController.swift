@@ -12,16 +12,16 @@ class AlbumViewController: UIViewController, HasLoadingState {
     typealias PreLoadingValue = AlbumViewModel
     typealias LoadingValue = AlbumTracksViewModel
     typealias LoadingError = ApplicationError
-    
+
     lazy var tracksTableViewController = TracksTableViewController()
     lazy var titleView = StretychHeaderTitleView()
     lazy var stretchyViewController = StretchyHeaderScrollViewController(headerView: titleView)
-        
+
     override func loadView() {
         view = UIView()
         install(stretchyViewController)
     }
-    
+
     func setLoadingState(_ state: LoadingState<AlbumViewModel, AlbumTracksViewModel, ApplicationError>) {
         switch state {
         case let .initial(album):
@@ -39,7 +39,7 @@ class AlbumViewController: UIViewController, HasLoadingState {
             print(error)
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .darkGray

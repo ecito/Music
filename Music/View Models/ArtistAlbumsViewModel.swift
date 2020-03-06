@@ -12,7 +12,7 @@ struct ArtistAlbumsViewModel: DeezerCollectionItemSectionViewModel {
     let title: String
     let imageURL: String
     let albums: [AlbumViewModel]
-    
+
     var items: [DeezerCollectionItemViewModel] { albums }
 }
 

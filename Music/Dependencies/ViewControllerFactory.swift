@@ -28,20 +28,20 @@ extension AppDependencies: ViewControllerFactory {
         tabBar.viewControllers?[1].tabBarItem.title = "Home"
         return tabBar
     }
-    
+
     func makeHomeFlowController() -> HomeFlowController {
         return HomeFlowController(dependencies: self)
     }
-    
+
     func makeSearchFlowController() -> SearchFlowController {
         SearchFlowController(dependencies: self)
     }
-    
+
     func makeAlbumsForArtistViewController(_ artist: SearchDatum) -> ArtistViewController {
         let artistViewController = ArtistViewController(dependencies: self)
 
         artistViewController.setLoadingState(.initial(preValue: artist))
-        
+
         self.deezerService.getAlbumsForArtist(artist.id) { result in
             switch result {
             case let .success(albums):
@@ -54,12 +54,12 @@ extension AppDependencies: ViewControllerFactory {
 
         return artistViewController
     }
-    
+
     func makeAlbumViewController(_ album: AlbumViewModel) -> AlbumViewController {
         let albumViewController = AlbumViewController()
-        
+
         albumViewController.setLoadingState(.initial(preValue: album))
-        
+
         self.deezerService.getTracksForAlbum(album.id) { result in
             switch result {
             case let .success(tracks):
@@ -69,16 +69,16 @@ extension AppDependencies: ViewControllerFactory {
                 albumViewController.setLoadingState(.failed(error: .deezerError(error)))
             }
         }
-        
+
         return albumViewController
     }
-    
+
     func makeDeezerCollectionView(_ viewModels: [DeezerCollectionItemSectionViewModel]) -> DeezerItemCollectionViewController {
 
             let collection = DeezerItemCollectionViewController(viewType: UIImageView.self,
                                                                 sectionTitleViewType: UILabel.self,
                                                                 layout: DeezerItemCollectionViewController.deezerLayout())
-            
+
             collection.numberOfItems = { viewModels[$0].items.count }
             collection.numberOfSections = { viewModels.count }
             collection.configureView = { indexPath, view in
@@ -92,7 +92,7 @@ extension AppDependencies: ViewControllerFactory {
             collection.didSelectView = { indexPath, view in
                 print(indexPath)
             }
-            
+
             return collection
     }
 }

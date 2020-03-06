@@ -17,7 +17,7 @@ class SearchFlowController: UIViewController {
         search.didSelectItem = { [weak self] item, indexPath in
             self?.showAlbumsForArtist(item)
         }
-        
+
         return search
     }()
 
@@ -33,16 +33,16 @@ class SearchFlowController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         view = UIView()
         install(ownedNavigationController)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
     func showAlbumsForArtist(_ artist: SearchDatum) {
         let viewController = dependencies.makeAlbumsForArtistViewController(artist)
         viewController.didSelectItem = { [weak self] (viewModel, indexPath) in
@@ -50,11 +50,9 @@ class SearchFlowController: UIViewController {
         }
         ownedNavigationController.pushViewController(viewController, animated: true)
     }
-    
-    
+
     func showAlbum(_ album: AlbumViewModel) {
         let viewController = dependencies.makeAlbumViewController(album)
         ownedNavigationController.pushViewController(viewController, animated: true)
     }
 }
-

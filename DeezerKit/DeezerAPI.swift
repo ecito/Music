@@ -40,7 +40,7 @@ extension DeezerAPI: TargetType {
             return "album/\(id)/tracks"
         }
     }
-    
+
     var queryParameters: QueryParameters? {
         switch self {
         case let .searchArtists(text, index, limit):
@@ -60,7 +60,7 @@ extension DeezerAPI: TargetType {
             return nil
         }
     }
-    
+
     var diskPath: String? {
         var filename = ""
 
@@ -71,8 +71,7 @@ extension DeezerAPI: TargetType {
             if let index = index,
                 let limit = limit {
                 filename = "search-index\(index)-limit\(limit)"
-            }
-            else {
+            } else {
                 filename = "search"
             }
         case .albumsForArtist:
@@ -82,10 +81,10 @@ extension DeezerAPI: TargetType {
         case .tracksForAlbum:
             filename = "album-tracks"
         }
-        
+
         return Bundle.main.path(forResource: filename, ofType: "json")
     }
-    
+
     var diskPathErrorModel: String? {
         return Bundle.main.path(forResource: "error", ofType: "json")
     }
@@ -94,18 +93,18 @@ extension DeezerAPI: TargetType {
 extension QueryParameters {
     static func deezerQueryParameters(_ additionalParamenters: [String: Any]?, index: Int?, limit: Int?) -> QueryParameters? {
         var parameters: [String: Any] = additionalParamenters ?? [String: Any]()
-        
+
         if let index = index {
             parameters["index"] = index
         }
         if let limit = limit {
             parameters["limit"] = limit
         }
-        
+
         guard !parameters.isEmpty else {
             return nil
         }
-        
+
         return QueryParameters(parameters)
     }
 }

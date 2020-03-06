@@ -17,7 +17,7 @@ class DeezerServiceTests: XCTestCase {
    override func setUp() {
        service = DeezerService(network: MockNetwork())
    }
-   
+
     func testSearch() {
         let expectation = XCTestExpectation(description: "should get search response")
 
@@ -30,10 +30,10 @@ class DeezerServiceTests: XCTestCase {
                 XCTFail("should not get an error: \(error)")
             }
         }
-        
+
         wait(for: [expectation], timeout: 5)
     }
-    
+
     func testErrorResponse() {
         let expectation = XCTestExpectation(description: "should get search response")
 
@@ -53,7 +53,7 @@ class DeezerServiceTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        
+
         wait(for: [expectation], timeout: 5)
     }
 }

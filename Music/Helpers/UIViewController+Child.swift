@@ -13,9 +13,9 @@ public extension UIViewController {
         addChild(child)
 
         child.view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         let viewToUse: UIView = view ?? self.view
-        
+
         viewToUse.addSubview(child.view)
 
         NSLayoutConstraint.activate([
@@ -27,7 +27,7 @@ public extension UIViewController {
 
         child.didMove(toParent: self)
     }
-    
+
     func remove() {
         willMove(toParent: nil)
         view.removeFromSuperview()

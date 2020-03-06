@@ -17,6 +17,10 @@ class HomeViewController: UIViewController, HasLoadingState {
 
     var collectionViewController: DeezerItemCollectionViewController?
     
+    var items = [DeezerCollectionItemSectionViewModel]()
+    
+    var didSelectItem: (DeezerCollectionItemViewModel, IndexPath) -> () = { _, _ in } 
+    
     init(dependencies: HasDeezerService & ViewControllerFactory & ViewModelFactory) {
         self.dependencies = dependencies
         super.init(nibName: nil, bundle: nil)
@@ -40,7 +44,12 @@ class HomeViewController: UIViewController, HasLoadingState {
         case .reloading:
             break
         case let .loaded(viewModel):
+            self.items = viewModel
             collectionViewController = dependencies.makeDeezerCollectionView(viewModel)
+            collectionViewController?.didSelectView = { indexPath, view in
+                let item = self.items[indexPath.section].items[indexPath.row]
+                self.didSelectItem(item, indexPath)
+            }
             install(collectionViewController!)
         case let .failed(error):
             print(error)
@@ -51,7 +60,13 @@ class HomeViewController: UIViewController, HasLoadingState {
 class HomeFlowController: UIViewController {
     private var dependencies: HasDeezerService & ViewControllerFactory & ViewModelFactory
     
-    private lazy var homeViewController = HomeViewController(dependencies: dependencies)
+    private lazy var homeViewController: HomeViewController = {
+        let viewController = HomeViewController(dependencies: dependencies)
+        viewController.didSelectItem = { [weak self] item, indexPath in
+            self?.show(item)
+        }
+        return viewController
+    }()
 
     private lazy var ownedNavigationController: UINavigationController = {
         return UINavigationController(rootViewController: homeViewController)
@@ -91,6 +106,7 @@ class HomeFlowController: UIViewController {
     }
     
     func show(_ viewModel: DeezerCollectionItemViewModel) {
-        // hmmm
+        // hmmm ... ok stop it, feature creeping too much now
+        print(viewModel)
     }
 }

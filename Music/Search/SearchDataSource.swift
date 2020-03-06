@@ -25,7 +25,7 @@ public class SearchDataSource {
 
     public static var cellIdentifier = "Cell"
     public var searchLimit: Int = 25
-    public static var debounceMilliseconds: Int = 500
+    public static var debounceMilliseconds: Int = 200
     
     public var lastSearchText: String?
     public var lastSearch: Search?

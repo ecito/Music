@@ -33,6 +33,7 @@ class AlbumViewController: UIViewController, HasLoadingState {
         case .reloading:
             break
         case let .loaded(tracks):
+            stretchyViewController.setContentViewController(tracksTableViewController)
             tracksTableViewController.show(tracks.tracks)
         case .failed(let error):
             print(error)

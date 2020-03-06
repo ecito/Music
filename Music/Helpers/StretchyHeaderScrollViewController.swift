@@ -149,7 +149,6 @@ class StretchyHeaderScrollViewController: UIViewController {
     
     
     private func updatedContentOffset() {
-        return
         let tableViewYOffset = -childScrollView.contentOffset.y - self.view.safeAreaInsets.top - headerHeight
                 
         if tableViewYOffset > 0 {
